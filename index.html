@@ -61,6 +61,16 @@
     }
     header .links a:hover { opacity: 1; text-decoration: underline; }
 
+    header .bio {
+      margin-top: 1.1rem;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
     main {
       max-width: 960px;
       margin: 0 auto;
@@ -161,10 +171,22 @@
 
 <header>
   <h1>Troy Altus</h1>
-  <p>Engineer &middot; MS Mechanical Engineering &middot; Solid Rocket Systems &amp; Data Science</p>
+  <p>Engineer &middot; MS Mechanical Engineering &middot; Solid Rocket Propulsion &amp; Data Science</p>
   <div class="links">
     <a href="https://github.com/altustd" target="_blank">GitHub</a>
+    <a href="mailto:altustd@gmail.com">Email</a>
   </div>
+  <p class="bio">
+    I'm a mechanical engineer specializing in solid rocket motor ballistics &mdash; burn rate modeling,
+    grain design, internal performance prediction, and static fire test analysis.
+    My MS thesis at George Washington University, conducted at NASA Langley Research Center,
+    introduced a response surface methodology for multidisciplinary design optimization
+    that NASA published as a Contractor Report in 2002.
+    <br><br>
+    I started writing these to close specific gaps in my own knowledge &mdash; the ones textbooks bury in surrounding fluff.
+    AI tools let me scope a topic precisely, skip what I already know, and push the rigor as far as I want.
+    No fixed agenda.
+  </p>
 </header>
 
 <main>
@@ -183,6 +205,13 @@
 
   <p class="section-label">Data Science &amp; Optimization</p>
   <div class="grid">
+
+    <a class="card" href="https://altustd.github.io/bliss2026" target="_blank">
+      <span class="card-tag tag-ds">MDO</span>
+      <div class="card-title">BLISS-2026</div>
+      <div class="card-subtitle">Decomposition-Based Multidisciplinary Design Optimization &mdash; IV&amp;V and modernization of the author&rsquo;s 2002 NASA Contractor Report, reimplemented in Julia with Gaussian Process surrogates and formal convergence criteria.</div>
+      <div class="card-arrow">Read &rarr;</div>
+    </a>
 
     <a class="card" href="https://altustd.github.io/ops-research-ebook" target="_blank">
       <span class="card-tag tag-ds">Operations Research</span>
