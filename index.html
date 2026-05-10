@@ -71,6 +71,14 @@
       line-height: 1.65;
     }
 
+    header .bio + .bio {
+      margin-top: 0.9rem;
+    }
+
+    footer small {
+      font-size: 0.75rem;
+    }
+
     main {
       max-width: 960px;
       margin: 0 auto;
@@ -173,7 +181,7 @@
   <h1>Troy Altus</h1>
   <p>Engineer &middot; MS Mechanical Engineering &middot; Solid Rocket Propulsion &amp; Data Science</p>
   <div class="links">
-    <a href="https://github.com/altustd" target="_blank">GitHub</a>
+    <a href="https://github.com/altustd" target="_blank" rel="noopener">GitHub</a>
     <a href="mailto:altustd@gmail.com">Email</a>
   </div>
   <p class="bio">
@@ -182,10 +190,14 @@
     My MS thesis at George Washington University, conducted at NASA Langley Research Center,
     introduced a response surface methodology for multidisciplinary design optimization
     that NASA published as a Contractor Report in 2002.
-    <br><br>
-    I started writing these to close specific gaps in my own knowledge &mdash; the ones textbooks bury in surrounding fluff.
-    AI tools let me scope a topic precisely, skip what I already know, and push the rigor as far as I want.
-    No fixed agenda.
+  </p>
+  <p class="bio">
+    I started making these because I wanted to review engineering concepts I hadn't needed in years &mdash;
+    and I didn't want to read a textbook to do it. AI tools let me get exactly the content I need,
+    at the depth I want, without the surrounding fluff. What started as a study tool became something
+    I genuinely enjoy: pointing AI at a topic I'm curious about and seeing what it builds.
+    Most of the writing and code here was produced with AI assistance, reviewed and corrected by me.
+    Some of it surprised me. I publish it here because it might be useful to someone else.
   </p>
 </header>
 
@@ -194,7 +206,7 @@
   <p class="section-label">Solid Rocket Systems</p>
   <div class="grid">
 
-    <a class="card" href="https://solid-rocket-genealogy-ebook.netlify.app" target="_blank">
+    <a class="card" href="https://solid-rocket-genealogy-ebook.netlify.app" target="_blank" rel="noopener">
       <span class="card-tag tag-rocket">History</span>
       <div class="card-title">An Incestuous Community</div>
       <div class="card-subtitle">How Salt, Tires, and Explosives Built America's Strategic Missiles</div>
@@ -206,14 +218,14 @@
   <p class="section-label">Data Science &amp; Optimization</p>
   <div class="grid">
 
-    <a class="card" href="https://altustd.github.io/bliss2026" target="_blank">
+    <a class="card" href="https://altustd.github.io/bliss2026" target="_blank" rel="noopener">
       <span class="card-tag tag-ds">MDO</span>
       <div class="card-title">BLISS-2026</div>
       <div class="card-subtitle">Decomposition-Based Multidisciplinary Design Optimization &mdash; IV&amp;V and modernization of the author&rsquo;s 2002 NASA Contractor Report, reimplemented in Julia with Gaussian Process surrogates and formal convergence criteria.</div>
       <div class="card-arrow">Read &rarr;</div>
     </a>
 
-    <a class="card" href="https://altustd.github.io/ops-research-ebook" target="_blank">
+    <a class="card" href="https://altustd.github.io/ops-research-ebook" target="_blank" rel="noopener">
       <span class="card-tag tag-ds">Operations Research</span>
       <div class="card-title">Data Science Tools for Classical Operations Research</div>
       <div class="card-subtitle">Python Implementation of Numerical Optimization &amp; Modern OR</div>
@@ -226,7 +238,7 @@
 
 <footer>
   &copy; 2026 Troy Altus<br>
-  <span style="font-size:0.75rem;">All data and content on this site is sourced from open literature and publicly available resources.</span>
+  <small>All data and content on this site is sourced from open literature and publicly available resources.</small>
 </footer>
 
 </body>
