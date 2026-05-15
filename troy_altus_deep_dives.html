@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Troy Altus — Deep Dives</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #f9f9f7;
+      color: #2c2c2a;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #042C53 0%, #185FA5 100%);
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 48px;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.5px;
+    }
+
+    .header .subtitle {
+      font-size: 15px;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 2rem;
+      font-weight: 400;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .header .tagline {
+      font-size: 17px;
+      color: rgba(255,255,255,0.95);
+      max-width: 750px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+      font-weight: 400;
+    }
+
+    .header .nav {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .header a {
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+      padding: 0.6rem 1.2rem;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .header a:hover {
+      background: rgba(255,255,255,0.15);
+      border-color: rgba(255,255,255,0.6);
+    }
+
+    .content {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .section {
+      margin-bottom: 5rem;
+    }
+
+    .section-header {
+      margin-bottom: 3rem;
+    }
+
+    .section-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+      font-size: 24px;
+    }
+
+    .section-icon.history {
+      background: #FAEEDA;
+      color: #854F0B;
+    }
+
+    .section-icon.data {
+      background: #E1F5EE;
+      color: #0F6E56;
+    }
+
+    .section h2 {
+      font-size: 32px;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+      color: #2c2c2a;
+    }
+
+    .section-desc {
+      font-size: 15px;
+      color: #888780;
+      max-width: 650px;
+      line-height: 1.6;
+    }
+
+    .dives-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2.5rem;
+      grid-auto-rows: 1fr;
+    }
+
+    .deep-dive {
+      background: white;
+      border: 1.5px solid #d3d1c7;
+      border-radius: 14px;
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .deep-dive::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--dive-color-start) 0%, var(--dive-color-end) 100%);
+    }
+
+    .deep-dive::after {
+      content: '';
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--dive-color-start);
+      opacity: 0.08;
+    }
+
+    .deep-dive:hover {
+      border-color: var(--dive-color-start);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    }
+
+    .deep-dive.blue {
+      --dive-color-start: #185FA5;
+      --dive-color-end: #378ADD;
+    }
+
+    .deep-dive.teal {
+      --dive-color-start: #0F6E56;
+      --dive-color-end: #1D9E75;
+    }
+
+    .deep-dive.coral {
+      --dive-color-start: #993C1D;
+      --dive-color-end: #D85A30;
+    }
+
+    .deep-dive.purple {
+      --dive-color-start: #534AB7;
+      --dive-color-end: #7F77DD;
+    }
+
+    .dive-tag {
+      display: inline-flex;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      margin-bottom: 1.5rem;
+      width: fit-content;
+      background: var(--tag-bg);
+      color: var(--tag-color);
+    }
+
+    .deep-dive.blue .dive-tag {
+      --tag-bg: #E6F1FB;
+      --tag-color: #185FA5;
+    }
+
+    .deep-dive.teal .dive-tag {
+      --tag-bg: #E1F5EE;
+      --tag-color: #0F6E56;
+    }
+
+    .deep-dive.coral .dive-tag {
+      --tag-bg: #FAECE7;
+      --tag-color: #993C1D;
+    }
+
+    .deep-dive.purple .dive-tag {
+      --tag-bg: #EEEDFE;
+      --tag-color: #534AB7;
+    }
+
+    .deep-dive h3 {
+      font-size: 22px;
+      font-weight: 500;
+      color: #2c2c2a;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .deep-dive .description {
+      font-size: 15px;
+      color: #888780;
+      line-height: 1.75;
+      margin-bottom: 2rem;
+      flex-grow: 1;
+    }
+
+    .dive-meta {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #d3d1c7;
+      font-size: 13px;
+      color: #b4b2a9;
+    }
+
+    .dive-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .dive-meta i {
+      font-size: 14px;
+      color: var(--dive-color-start);
+    }
+
+    .dive-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--dive-color-start);
+      text-decoration: none;
+      padding: 0.6rem 0;
+      border-bottom: 2px solid var(--dive-color-start);
+      transition: all 0.2s;
+    }
+
+    .dive-cta:hover {
+      gap: 0.9rem;
+      color: var(--dive-color-end);
+      border-bottom-color: var(--dive-color-end);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid #d3d1c7;
+      font-size: 13px;
+      color: #b4b2a9;
+      background: #f1efe8;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: #2c2c2a;
+        color: #d3d1c7;
+      }
+
+      .content {
+        background: #1a1a18;
+      }
+
+      .section h2 {
+        color: #d3d1c7;
+      }
+
+      .section-desc {
+        color: #888780;
+      }
+
+      .deep-dive {
+        background: #333330;
+        border-color: #444441;
+      }
+
+      .deep-dive h3 {
+        color: #d3d1c7;
+      }
+
+      .deep-dive .description {
+        color: #888780;
+      }
+
+      .dive-meta {
+        border-top-color: #444441;
+        color: #5f5e5a;
+      }
+
+      .footer {
+        background: #1a1a18;
+        border-top-color: #444441;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        padding: 3rem 1.5rem;
+      }
+
+      .header h1 {
+        font-size: 36px;
+      }
+
+      .header .tagline {
+        font-size: 15px;
+      }
+
+      .content {
+        padding: 2.5rem 1.5rem;
+      }
+
+      .dives-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .section {
+        margin-bottom: 3.5rem;
+      }
+
+      .section h2 {
+        font-size: 28px;
+      }
+
+      .deep-dive h3 {
+        font-size: 20px;
+      }
+
+      .deep-dive::after {
+        right: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Troy Altus</h1>
+    <p class="subtitle">Deep Dives</p>
+    <p class="tagline">Custom technical curricula built for modern learners. AI-generated and hand-refined explorations designed for both analytical depth and approachable learning. Text now, audio and interactive assessments coming soon.</p>
+    <div class="nav">
+      <a href="https://github.com/altustd" target="_blank">GitHub</a>
+      <a href="mailto:troy@troyaltus.com">Email</a>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon history">
+          <i class="fas fa-book"></i>
+        </div>
+        <h2>History & Engineering</h2>
+        <p class="section-desc">Tracing the people, decisions, and breakthroughs that shaped modern engineering and technology.</p>
+      </div>
+      <div class="dives-grid">
+        <div class="deep-dive coral">
+          <div class="dive-tag">Strategic Missiles</div>
+          <h3>An Incestuous Community</h3>
+          <p class="description">How salt, tires, and explosives built America's strategic missiles. A genealogical deep dive into the engineers, failures, and pivotal moments that defined the Space Race.</p>
+          <div class="dive-meta">
+            <span><i class="fas fa-calendar"></i> 2024</span>
+            <span><i class="fas fa-file-alt"></i> Interactive</span>
+          </div>
+          <a href="https://solid-rocket-genealogy-ebook.netlify.app" target="_blank" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon data">
+          <i class="fas fa-chart-bar"></i>
+        </div>
+        <h2>Data Science & Optimization</h2>
+        <p class="section-desc">Modern computational techniques applied to classical problems — from aircraft design to causal reasoning.</p>
+      </div>
+      <div class="dives-grid">
+        <div class="deep-dive blue">
+          <div class="dive-tag">Aircraft Design</div>
+          <h3>BLISS-2026</h3>
+          <p class="description">Revisiting a 2002 aircraft design optimization method with modern tools. Julia, Gaussian Process surrogates, and a proper convergence test.</p>
+          <div class="dive-meta">
+            <span><i class="fas fa-calendar"></i> 2026</span>
+            <span><i class="fas fa-file-alt"></i> Interactive</span>
+          </div>
+          <a href="https://altustd.github.io/bliss2026" target="_blank" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="deep-dive teal">
+          <div class="dive-tag">Operations Research</div>
+          <h3>Tools for Classical OR</h3>
+          <p class="description">Python implementation of numerical optimization and modern operations research. From linear programming to metaheuristics and beyond.</p>
+          <div class="dive-meta">
+            <span><i class="fas fa-calendar"></i> 2025</span>
+            <span><i class="fas fa-file-alt"></i> Interactive</span>
+          </div>
+          <a href="https://altustd.github.io/ops-research-ebook" target="_blank" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="deep-dive purple">
+          <div class="dive-tag">Probability & Reasoning</div>
+          <h3>Uncertain Minds</h3>
+          <p class="description">Causal inference, Bayesian reasoning, and the science of learning. Understanding cause-and-effect relationships in an uncertain world.</p>
+          <div class="dive-meta">
+            <span><i class="fas fa-calendar"></i> 2024</span>
+            <span><i class="fas fa-file-alt"></i> Interactive</span>
+          </div>
+          <a href="https://altustd.github.io/causal-inference-python-ebook/" target="_blank" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="deep-dive blue">
+          <div class="dive-tag">Optimization</div>
+          <h3>The Mathematics of Folding</h3>
+          <p class="description">Numerical optimization through origami engineering. Crease geometry, circle packing, and inverse fold design explored in Python.</p>
+          <div class="dive-meta">
+            <span><i class="fas fa-calendar"></i> 2024</span>
+            <span><i class="fas fa-file-alt"></i> Interactive</span>
+          </div>
+          <a href="https://altustd.github.io/origami-optimization-ebook/" target="_blank" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>© 2026 Troy Altus. All data and content sourced from open literature and publicly available resources.</p>
+  </div>
+</body>
+</html>
