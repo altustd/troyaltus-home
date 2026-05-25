@@ -235,6 +235,29 @@
 
   </div>
 
+  <p class="section-label">Network Analysis</p>
+  <div class="grid">
+
+    <div class="card coming-soon">
+      <span class="card-tag tag-wip">Series WIP</span>
+      <div class="card-title">US Airport Network</div>
+      <div class="card-subtitle">Degree distribution, betweenness centrality, small-world properties, and robustness analysis of the domestic air system &mdash; first in a series covering airports, power grids, and biological networks</div>
+    </div>
+
+  </div>
+
+  <p class="section-label">Independent Verification &amp; Validation</p>
+  <div class="grid">
+
+    <a class="card" href="https://github.com/altustd/bell-curve-replication" target="_blank" rel="noopener">
+      <span class="card-tag tag-ds">Replication Study</span>
+      <div class="card-title">The Bell Curve &mdash; Replication</div>
+      <div class="card-subtitle">Independent replication of Herrnstein &amp; Murray's statistical claims using modern methods &mdash; GSS, NLSY79, NLSY97, and Python</div>
+      <div class="card-arrow">View &rarr;</div>
+    </a>
+
+  </div>
+
 
   <p class="section-label">Computational Linguistics</p>
   <div class="grid">
@@ -304,5 +327,24 @@
   <small>All data and content on this site is sourced from open literature and publicly available resources.</small>
 </footer>
 
+<script>
+  // WIP cards visible only with ?preview in URL
+  // Bookmark: https://www.troyaltus.com?preview
+  if (!location.search.includes('preview')) {
+    document.querySelectorAll('.card.coming-soon').forEach(el => {
+      el.style.display = 'none';
+    });
+    document.querySelectorAll('.grid').forEach(grid => {
+      const visible = grid.querySelectorAll('.card:not(.coming-soon)');
+      if (visible.length === 0) {
+        grid.style.display = 'none';
+        const prev = grid.previousElementSibling;
+        if (prev && prev.classList.contains('section-label')) {
+          prev.style.display = 'none';
+        }
+      }
+    });
+  }
+</script>
 </body>
 </html>
