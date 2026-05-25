@@ -173,6 +173,31 @@
       color: var(--muted);
       border-top: 1px solid var(--border);
     }
+
+    /* Card variant with dual action links (HTML + PDF) */
+    .card-multi {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      cursor: default;
+    }
+    .card-multi:hover {
+      border-color: var(--border);
+      transform: none;
+    }
+    .card-links {
+      margin-top: auto;
+      padding-top: 0.6rem;
+      display: flex;
+      gap: 1rem;
+    }
+    .card-links a {
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-decoration: none;
+      opacity: 0.75;
+    }
+    .card-links a:hover { opacity: 1; text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -249,12 +274,15 @@
   <p class="section-label">Independent Verification &amp; Validation</p>
   <div class="grid">
 
-    <a class="card" href="https://github.com/altustd/bell-curve-replication" target="_blank" rel="noopener">
+    <div class="card card-multi">
       <span class="card-tag tag-ds">Replication Study</span>
       <div class="card-title">The Bell Curve &mdash; Replication</div>
-      <div class="card-subtitle">Independent replication of Herrnstein &amp; Murray's statistical claims using modern methods &mdash; GSS, NLSY79, NLSY97, and Python</div>
-      <div class="card-arrow">View &rarr;</div>
-    </a>
+      <div class="card-subtitle">Independent replication of Herrnstein &amp; Murray's statistical claims &mdash; AFQT, SES, and social outcomes in NLSY79/97 and GSS using modern methods</div>
+      <div class="card-links">
+        <a href="https://altustd.github.io/bell-curve-replication/" target="_blank" rel="noopener">Read HTML &rarr;</a>
+        <a href="https://altustd.github.io/bell-curve-replication/bell-curve-replication.pdf" target="_blank" rel="noopener">&darr; PDF</a>
+      </div>
+    </div>
 
   </div>
 
