@@ -16,7 +16,10 @@
       --text: #e2e4ec;
       --muted: #8890a8;
       --tag-rocket: rgba(79,142,247,0.15);
-      --tag-ds: rgba(224,108,74,0.15);
+      --tag-ds:     rgba(224,108,74,0.15);
+      --tag-net:    rgba(78,201,160,0.15);
+      --tag-ivv:    rgba(164,126,232,0.15);
+      --tag-ling:   rgba(212,160,68,0.15);
     }
 
     body {
@@ -96,6 +99,14 @@
       border-bottom: 1px solid var(--border);
     }
 
+    .section-note {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: -0.6rem;
+      margin-bottom: 1.2rem;
+      line-height: 1.5;
+    }
+
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -138,9 +149,11 @@
       width: fit-content;
     }
 
-    .tag-rocket { background: var(--tag-rocket); color: var(--accent); }
-    .tag-ds     { background: var(--tag-ds);     color: var(--accent2); }
-    .tag-wip    { background: rgba(255,255,255,0.06); color: var(--muted); }
+    .tag-rocket { background: var(--tag-rocket); color: #4f8ef7; }
+    .tag-ds     { background: var(--tag-ds);     color: #e06c4a; }
+    .tag-net    { background: var(--tag-net);    color: #4ec9a0; }
+    .tag-ivv    { background: var(--tag-ivv);    color: #a47ee8; }
+    .tag-ling   { background: var(--tag-ling);   color: #d4a044; }
 
     .card-title {
       font-size: 1rem;
@@ -264,7 +277,7 @@
   <div class="grid">
 
     <div class="card coming-soon">
-      <span class="card-tag tag-wip">Series WIP</span>
+      <span class="card-tag tag-net">Series WIP</span>
       <div class="card-title">US Airport Network</div>
       <div class="card-subtitle">Degree distribution, betweenness centrality, small-world properties, and robustness analysis of the domestic air system &mdash; first in a series covering airports, power grids, and biological networks</div>
     </div>
@@ -272,10 +285,11 @@
   </div>
 
   <p class="section-label">Independent Verification &amp; Validation</p>
+  <p class="section-note">Occasional spot-checks of published claims against raw microdata and primary sources. The US Census IV&amp;V series doubles as a tour of what the Census API has to offer &mdash; each note is a potential seed for a future project.</p>
   <div class="grid">
 
     <div class="card card-multi">
-      <span class="card-tag tag-ds">Replication Study</span>
+      <span class="card-tag tag-ivv">Replication Study</span>
       <div class="card-title">The Bell Curve &mdash; Replication</div>
       <div class="card-subtitle">Independent replication of Herrnstein &amp; Murray's statistical claims &mdash; AFQT, SES, and social outcomes in NLSY79/97 and GSS using modern methods</div>
       <div class="card-links">
@@ -284,64 +298,69 @@
       </div>
     </div>
 
-  </div>
+    <div class="card coming-soon">
+      <span class="card-tag tag-ivv">US Census IV&amp;V</span>
+      <div class="card-title">2024 Education Enrollment</div>
+      <div class="card-subtitle">Verifying Census Bureau headline figures on school enrollment against CPS microdata and API tabulations</div>
+    </div>
 
+  </div>
 
   <p class="section-label">Computational Linguistics</p>
   <div class="grid">
 
     <a class="card" href="https://altustd.github.io/etymology-data-science/" target="_blank" rel="noopener">
-      <span class="card-tag tag-ds">Survey</span>
+      <span class="card-tag tag-ling">Survey</span>
       <div class="card-title">Etymology + Data Science</div>
       <div class="card-subtitle">A computational survey of word origins &mdash; from the comparative method to transformer-based proto-language reconstruction</div>
       <div class="card-arrow">Read &rarr;</div>
     </a>
 
     <a class="card" href="https://altustd.github.io/semantic-drift-tech/" target="_blank" rel="noopener">
-      <span class="card-tag tag-ds">Technical Paper</span>
+      <span class="card-tag tag-ling">Technical Paper</span>
       <div class="card-title">Do Technology Words Drift Faster?</div>
       <div class="card-subtitle">Measuring semantic change rates across word categories using Hamilton et al. historical embeddings</div>
       <div class="card-arrow">Read &rarr;</div>
     </a>
 
     <div class="card coming-soon">
-      <span class="card-tag tag-wip">Paper WIP</span>
+      <span class="card-tag tag-ling">Paper WIP</span>
       <div class="card-title">Loanword Networks</div>
       <div class="card-subtitle">Graph-theoretic analysis of borrowing density across Indo-European branches</div>
     </div>
 
     <div class="card coming-soon">
-      <span class="card-tag tag-wip">Paper WIP</span>
+      <span class="card-tag tag-ling">Paper WIP</span>
       <div class="card-title">Cognate Detection Benchmark</div>
       <div class="card-subtitle">Comparing edit-distance, PMI, and neural methods on gold-standard cognate pairs</div>
     </div>
 
     <div class="card coming-soon">
-      <span class="card-tag tag-wip">Paper WIP</span>
+      <span class="card-tag tag-ling">Paper WIP</span>
       <div class="card-title">The Neogrammarian Test</div>
       <div class="card-subtitle">Are sound changes truly exceptionless? Corpus validation of the regularity hypothesis</div>
     </div>
 
     <div class="card coming-soon">
-      <span class="card-tag tag-wip">Paper WIP</span>
+      <span class="card-tag tag-ling">Paper WIP</span>
       <div class="card-title">Reconstruction Accuracy</div>
       <div class="card-subtitle">Transformer vs. rule-based proto-form reconstruction &mdash; scored against attested Latin and Greek</div>
     </div>
 
     <div class="card coming-soon">
-      <span class="card-tag tag-wip">App WIP</span>
+      <span class="card-tag tag-ling">App WIP</span>
       <div class="card-title">Semantic Drift Dashboard</div>
       <div class="card-subtitle">Interactive browser for any word's semantic trajectory across decades</div>
     </div>
 
     <div class="card coming-soon">
-      <span class="card-tag tag-wip">App WIP</span>
+      <span class="card-tag tag-ling">App WIP</span>
       <div class="card-title">Cognate Explorer</div>
       <div class="card-subtitle">Input two words &mdash; alignment score, shared ancestry probability, and tree placement</div>
     </div>
 
     <div class="card coming-soon">
-      <span class="card-tag tag-wip">eBook WIP</span>
+      <span class="card-tag tag-ling">eBook WIP</span>
       <div class="card-title">The Indo-European Problem</div>
       <div class="card-subtitle">Full reconstruction pipeline for one language family &mdash; phylogenetics, sound laws, and the debate history</div>
     </div>
