@@ -20,6 +20,8 @@
       --tag-net:    rgba(78,201,160,0.15);
       --tag-ivv:    rgba(164,126,232,0.15);
       --tag-ling:   rgba(212,160,68,0.15);
+      --tag-music:  rgba(139,92,160,0.15);
+      --music-accent: #8b5a9f;
     }
 
     body {
@@ -154,6 +156,56 @@
     .tag-net    { background: var(--tag-net);    color: #4ec9a0; }
     .tag-ivv    { background: var(--tag-ivv);    color: #a47ee8; }
     .tag-ling   { background: var(--tag-ling);   color: #d4a044; }
+    .tag-music  { background: var(--tag-music);  color: #8b5a9f; }
+
+    /* Music section enhancements — subtle nylon-string theme */
+    .music-card {
+      border-top: 2px solid var(--music-accent);
+    }
+    .music-card:hover {
+      border-top-color: #a87bc2;
+    }
+
+    /* Cool surprise: 4 nylon strings that subtly vibrate on hover (guitar + ukulele) */
+    .music-card::before {
+      content: '';
+      position: absolute;
+      top: 1.9rem;
+      left: 1.5rem;
+      right: 1.5rem;
+      height: 3.2rem;
+      background: repeating-linear-gradient(
+        transparent 0px,
+        transparent 5px,
+        rgba(139, 92, 160, 0.0) 5px,
+        rgba(139, 92, 160, 0.0) 7px
+      );
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .music-card:hover::before {
+      opacity: 0.22;
+      animation: string-vibrate 0.9s ease-in-out infinite;
+    }
+    @keyframes string-vibrate {
+      0%, 100% { transform: translateY(0); }
+      45% { transform: translateY(0.6px); }
+      55% { transform: translateY(-0.3px); }
+    }
+
+    .card-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--music-accent);
+      color: #fff;
+      border-radius: 3px;
+      padding: 0.1rem 0.4rem;
+      align-self: flex-start;
+      margin-bottom: 0.2rem;
+    }
 
     .card-title {
       font-size: 1rem;
@@ -330,7 +382,7 @@
       <div class="card-arrow">Read &rarr;</div>
     </a>
 
-    <a class="card" href="https://altustd.github.io/semantic-drift-tech/" target="_blank" rel="noopener">
+    <a class="card" href="https://altustd.github.io/semantic-drift-tech/semantic-drift-tech.html" target="_blank" rel="noopener">
       <span class="card-tag tag-ling">Technical Paper</span>
       <div class="card-title">Do Technology Words Drift Faster?</div>
       <div class="card-subtitle">Measuring semantic change rates across word categories using Hamilton et al. historical embeddings</div>
@@ -377,6 +429,27 @@
       <span class="card-tag tag-ling">eBook WIP</span>
       <div class="card-title">The Indo-European Problem</div>
       <div class="card-subtitle">Full reconstruction pipeline for one language family &mdash; phylogenetics, sound laws, and the debate history</div>
+    </div>
+
+  </div>
+
+  <p class="section-label">Music &amp; Practice</p>
+  <p class="section-note">Two companion volumes for deliberate practice on nylon-string instruments. Scores, tablature, audio references, and focused technique guidance.</p>
+  <div class="grid">
+
+    <a class="card music-card" href="https://altustd.github.io/classical-guitar/" target="_blank" rel="noopener">
+      <span class="card-badge">New</span>
+      <span class="card-tag tag-music">Guitar</span>
+      <div class="card-title">Classical Guitar Companion</div>
+      <div class="card-subtitle">A practical study guide for nylon-string players &mdash; repertoire, technique, scores in notation + tablature, and deliberate practice strategies with audio</div>
+      <div class="card-arrow">Play &rarr;</div>
+    </a>
+
+    <div class="card coming-soon music-card">
+      <span class="card-badge" style="background:#5a4a60; color:#c8b8d0;">Vol. II</span>
+      <span class="card-tag tag-music">Ukulele</span>
+      <div class="card-title">Classical Ukulele Companion</div>
+      <div class="card-subtitle">Classical repertoire and technique for tenor (standard tuning) and baritone ukulele &mdash; notation, tablature, audio references, and deliberate practice strategies</div>
     </div>
 
   </div>
