@@ -258,6 +258,19 @@
       <div class="diagram-container" id="tree-diagram"></div>
     </div>
 
+    <div class="section" style="background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:1rem 1.25rem; margin-top:1.25rem;">
+      <h3 style="margin:0 0 0.5rem; font-size:0.95rem; color:var(--ling);">Reed–Kellogg System (Traditional Diagramming)</h3>
+      <p style="font-size:0.85rem; color:var(--muted); line-height:1.55; margin-bottom:0.6rem;">
+        Traditional sentence diagramming (developed 1877 by Reed &amp; Kellogg) uses a horizontal baseline divided by a vertical line into <strong>subject</strong> (left) and <strong>predicate</strong> (right). 
+        Direct objects use a stopped vertical line. Subject complements use a left-slanting line. Modifiers hang on slanted lines below the words they describe. 
+        Prepositional phrases branch on a slant with the object on a short horizontal.
+      </p>
+      <p style="font-size:0.82rem; color:var(--muted);">
+        This tool's "Traditional" view follows these conventions as closely as a starter parser allows. The editable JSON lets you correct or explore structures manually. 
+        For full details see the <a href="https://en.wikipedia.org/wiki/Reed–Kellogg_sentence_diagram" target="_blank" style="color:var(--accent);">Wikipedia entry</a> and resources on the Reed-Kellogg system.
+      </p>
+    </div>
+
     <div class="output-row">
       <div class="panel">
         <div class="section">
@@ -348,67 +361,89 @@
       return sentence.trim().replace(/[.,!?;:]$/, '').split(/\s+/);
     }
 
-    // Very basic but surprisingly useful starter parsers
+    // Improved starter parser with roles for Reed-Kellogg style
     function parseEnglish(sentence) {
       const words = tokenize(sentence);
       if (words.length === 0) return { type: 'S', children: [] };
 
-      // Naive verb finder
+      // Simple verb detection (expandable)
       const verbIdx = words.findIndex(w => 
-        /^(is|are|was|were|jumps?|runs?|sits?|gave?|gave|analyzed?|analysiert?)$/i.test(w)
+        /^(is|are|was|were|jumps?|runs?|sits?|gave?|gave|analyzed?|sits?|jumps?|runs?)$/i.test(w)
       );
-      const vIndex = verbIdx > 0 ? verbIdx : Math.floor(words.length / 2);
+      const vIndex = verbIdx > 0 ? verbIdx : Math.min(1, Math.floor(words.length / 2));
 
-      const subjectWords = words.slice(0, vIndex);
-      const rest = words.slice(vIndex);
+      const before = words.slice(0, vIndex);
+      const verbWord = words[vIndex] || 'VERB';
+      const after = words.slice(vIndex + 1);
 
-      // Very crude object / PP split
-      let objectWords = [];
-      let ppWords = [];
-      let verbWord = rest[0] || 'VERB';
+      // Detect subject complement (is/are/was/were + adj or noun)
+      const isLinking = /^(is|are|was|were)$/i.test(verbWord);
+      let directObj = [];
+      let subjectComp = [];
+      let pp = [];
 
-      for (let i = 1; i < rest.length; i++) {
-        const w = rest[i];
-        if (/^(over|on|in|to|for|with|by|at)$/i.test(w) && ppWords.length === 0) {
-          ppWords = rest.slice(i);
+      let i = 0;
+      while (i < after.length) {
+        const w = after[i];
+        if (/^(over|on|in|to|for|with|by|at|of)$/i.test(w) && pp.length === 0) {
+          pp = after.slice(i);
           break;
-        } else {
-          objectWords.push(w);
         }
+        if (isLinking && (i === 0 || (directObj.length === 0 && subjectComp.length === 0))) {
+          // rough: first content word after linking verb as complement
+          subjectComp.push(w);
+        } else if (!isLinking && directObj.length === 0) {
+          directObj.push(w);
+        } else {
+          // modifiers or more
+          if (directObj.length > 0) directObj.push(w);
+          else if (subjectComp.length > 0) subjectComp.push(w);
+        }
+        i++;
       }
 
+      // Build richer structure for traditional rendering
       const tree = {
         type: 'S',
-        children: [
-          {
-            type: 'NP',
-            children: subjectWords.map((w, i) => ({
-              type: i === 0 && /^(the|a|an|der|die|das)$/i.test(w) ? 'Det' : 'N',
-              word: w
-            }))
-          },
-          {
-            type: 'VP',
-            children: [
-              { type: 'V', word: verbWord },
-              ...(objectWords.length ? [{
-                type: 'NP',
-                children: objectWords.map(w => ({ type: 'N', word: w }))
-              }] : [])
-            ]
-          }
+        baseline: [
+          { role: 'subject', words: before.length ? before : ['(subject)'] },
+          { role: 'verb', word: verbWord }
         ]
       };
 
-      if (ppWords.length > 0) {
-        tree.children[1].children.push({
+      if (directObj.length) {
+        tree.baseline.push({ role: 'direct_object', words: directObj });
+      }
+      if (subjectComp.length) {
+        tree.baseline.push({ role: 'subject_complement', words: subjectComp });
+      }
+
+      // Modifiers (crude: assume adjectives before nouns in subject, adverbs near verb)
+      tree.modifiers = [];
+      // Prepositional phrases
+      if (pp.length) {
+        tree.pp = { prep: pp[0], object: pp.slice(1) };
+      }
+
+      // Keep full tree for the syntax tree view
+      tree.full = {
+        type: 'S',
+        children: [
+          { type: 'NP', children: before.map(w => ({ type: 'N', word: w })) },
+          { type: 'VP', children: [
+            { type: 'V', word: verbWord },
+            ...(directObj.length ? [{ type: 'NP', role: 'direct_object', children: directObj.map(w => ({type:'N', word:w})) }] : []),
+            ...(subjectComp.length ? [{ type: 'NP', role: 'subject_complement', children: subjectComp.map(w => ({type:'N', word:w})) }] : [])
+          ] }
+        ]
+      };
+      if (pp.length) {
+        tree.full.children[1].children.push({
           type: 'PP',
-          children: ppWords.map((w, i) => ({
-            type: i === 0 ? 'P' : 'NP',
-            word: w
-          }))
+          children: [{type:'P', word: pp[0]}, ...pp.slice(1).map(w => ({type:'NP', children:[{type:'N', word:w}]}))]
         });
       }
+
       return tree;
     }
 
@@ -471,68 +506,164 @@
       const svgNS = "http://www.w3.org/2000/svg";
       const svg = document.createElementNS(svgNS, "svg");
       svg.setAttribute("width", "100%");
-      svg.setAttribute("height", "220");
-      svg.setAttribute("viewBox", "0 0 900 220");
+      svg.setAttribute("height", "260");
+      svg.setAttribute("viewBox", "0 0 980 260");
 
-      // Simple horizontal baseline diagram (Reed-Kellogg approximation)
-      let x = 80;
-      const y = 110;
-      const lineY = 130;
+      const baselineY = 140;
+      let currentX = 70;
 
-      // Draw main line
-      const mainLine = document.createElementNS(svgNS, "line");
-      mainLine.setAttribute("x1", "40");
-      mainLine.setAttribute("y1", lineY);
-      mainLine.setAttribute("x2", "860");
-      mainLine.setAttribute("y2", lineY);
-      mainLine.setAttribute("stroke", COLORS.accent);
-      mainLine.setAttribute("stroke-width", "2.5");
-      svg.appendChild(mainLine);
+      // Draw the main baseline
+      const baseline = document.createElementNS(svgNS, "line");
+      baseline.setAttribute("x1", "30");
+      baseline.setAttribute("y1", baselineY);
+      baseline.setAttribute("x2", "950");
+      baseline.setAttribute("y2", baselineY);
+      baseline.setAttribute("stroke", COLORS.accent);
+      baseline.setAttribute("stroke-width", "2.5");
+      svg.appendChild(baseline);
 
-      function addWord(text, xPos, isVerb = false) {
+      function drawWord(text, x, yOffset = 0, isVerb = false, isModifier = false) {
         const txt = document.createElementNS(svgNS, "text");
-        txt.setAttribute("x", xPos);
-        txt.setAttribute("y", y);
+        txt.setAttribute("x", x);
+        txt.setAttribute("y", baselineY - 12 + yOffset);
         txt.setAttribute("text-anchor", "middle");
-        txt.setAttribute("fill", isVerb ? COLORS.ling : COLORS.text);
-        txt.setAttribute("font-size", "15");
+        txt.setAttribute("fill", isVerb ? COLORS.ling : (isModifier ? '#a8b0c8' : COLORS.text));
+        txt.setAttribute("font-size", isModifier ? "12" : "14");
         txt.setAttribute("font-weight", isVerb ? "700" : "500");
         txt.textContent = text;
         svg.appendChild(txt);
-
-        // vertical divider
-        const v = document.createElementNS(svgNS, "line");
-        v.setAttribute("x1", xPos);
-        v.setAttribute("y1", lineY - 8);
-        v.setAttribute("x2", xPos);
-        v.setAttribute("y2", lineY + 8);
-        v.setAttribute("stroke", COLORS.border);
-        v.setAttribute("stroke-width", "1.5");
-        svg.appendChild(v);
+        return x;
       }
 
-      // Very rough linear layout from the tree
-      function walk(node, depth = 0) {
-        if (node.word) {
-          const isVerb = node.type === 'V';
-          addWord(node.word, x, isVerb);
-          x += (node.word.length * 9) + 28;
-        }
-        if (node.children) {
-          node.children.forEach(child => walk(child, depth + 1));
-        }
+      function drawVertical(x, full = true) {
+        const line = document.createElementNS(svgNS, "line");
+        line.setAttribute("x1", x);
+        line.setAttribute("y1", baselineY - (full ? 18 : 0));
+        line.setAttribute("x2", x);
+        line.setAttribute("y2", baselineY + (full ? 18 : 0));
+        line.setAttribute("stroke", COLORS.border);
+        line.setAttribute("stroke-width", "1.8");
+        svg.appendChild(line);
       }
 
-      walk(tree);
+      function drawSlant(x, length = 22, direction = 'left') {
+        const line = document.createElementNS(svgNS, "line");
+        const dx = direction === 'left' ? -14 : 14;
+        line.setAttribute("x1", x);
+        line.setAttribute("y1", baselineY);
+        line.setAttribute("x2", x + dx);
+        line.setAttribute("y2", baselineY + length);
+        line.setAttribute("stroke", COLORS.border);
+        line.setAttribute("stroke-width", "1.5");
+        svg.appendChild(line);
+        return x + dx;
+      }
 
-      // Labels
+      // Use the new baseline structure if available, else fall back
+      const baselineItems = tree.baseline || [];
+
+      if (baselineItems.length > 0) {
+        // Subject group
+        const subj = baselineItems.find(b => b.role === 'subject') || baselineItems[0];
+        const subjX = currentX + 60;
+        subj.words.forEach((w, i) => {
+          drawWord(w, subjX + i * 38);
+        });
+        // Main subject-predicate divider (full vertical)
+        drawVertical(subjX + (subj.words.length - 0.5) * 38 + 25, true);
+        currentX = subjX + (subj.words.length) * 38 + 50;
+
+        // Verb
+        const verbItem = baselineItems.find(b => b.role === 'verb');
+        if (verbItem) {
+          drawWord(verbItem.word, currentX, 0, true);
+          currentX += verbItem.word.length * 9 + 40;
+        }
+
+        // Direct object or complement
+        const doItem = baselineItems.find(b => b.role === 'direct_object');
+        const compItem = baselineItems.find(b => b.role === 'subject_complement');
+
+        if (doItem) {
+          // Stopped vertical for direct object
+          drawVertical(currentX - 15, false);
+          doItem.words.forEach((w, i) => drawWord(w, currentX + i * 32));
+          currentX += doItem.words.length * 32 + 30;
+        }
+
+        if (compItem) {
+          // Slanted line for subject complement
+          const slantX = currentX - 10;
+          drawSlant(slantX, 20, 'left');
+          compItem.words.forEach((w, i) => drawWord(w, slantX - 25 + i * 28, 18));
+          currentX += 60;
+        }
+      } else {
+        // Fallback for old tree format
+        let x = 90;
+        function walk(node) {
+          if (node.word) {
+            const isVerb = node.type === 'V';
+            drawWord(node.word, x, 0, isVerb);
+            x += node.word.length * 9 + 35;
+            if (isVerb) drawVertical(x - 18, true);
+          }
+          if (node.children) node.children.forEach(walk);
+        }
+        walk(tree.full || tree);
+      }
+
+      // Prepositional phrase (branch)
+      if (tree.pp || (tree.full && tree.full.children && tree.full.children.some(c => c.type === 'PP'))) {
+        const pp = tree.pp || { prep: 'over', object: ['the', 'dog'] };
+        const branchX = currentX - 80;
+        // Slant for preposition
+        const slant = document.createElementNS(svgNS, "line");
+        slant.setAttribute("x1", branchX);
+        slant.setAttribute("y1", baselineY);
+        slant.setAttribute("x2", branchX - 18);
+        slant.setAttribute("y2", baselineY + 26);
+        slant.setAttribute("stroke", COLORS.border);
+        slant.setAttribute("stroke-width", "1.5");
+        svg.appendChild(slant);
+
+        // Horizontal for PP object
+        const hLine = document.createElementNS(svgNS, "line");
+        hLine.setAttribute("x1", branchX - 18);
+        hLine.setAttribute("y1", baselineY + 26);
+        hLine.setAttribute("x2", branchX + 45);
+        hLine.setAttribute("y2", baselineY + 26);
+        hLine.setAttribute("stroke", COLORS.border);
+        hLine.setAttribute("stroke-width", "1.5");
+        svg.appendChild(hLine);
+
+        const prepTxt = document.createElementNS(svgNS, "text");
+        prepTxt.setAttribute("x", branchX - 8);
+        prepTxt.setAttribute("y", baselineY + 18);
+        prepTxt.setAttribute("fill", COLORS.muted);
+        prepTxt.setAttribute("font-size", "11");
+        prepTxt.textContent = pp.prep;
+        svg.appendChild(prepTxt);
+
+        pp.object.forEach((w, i) => {
+          const oTxt = document.createElementNS(svgNS, "text");
+          oTxt.setAttribute("x", branchX + 5 + i * 22);
+          oTxt.setAttribute("y", baselineY + 40);
+          oTxt.setAttribute("fill", COLORS.text);
+          oTxt.setAttribute("font-size", "12");
+          oTxt.textContent = w;
+          svg.appendChild(oTxt);
+        });
+      }
+
+      // Title label
       const label = document.createElementNS(svgNS, "text");
-      label.setAttribute("x", "450");
-      label.setAttribute("y", "40");
+      label.setAttribute("x", "490");
+      label.setAttribute("y", "28");
       label.setAttribute("text-anchor", "middle");
       label.setAttribute("fill", COLORS.muted);
-      label.setAttribute("font-size", "12");
-      label.textContent = currentLang === 'de' ? "Deutsche Struktur (vereinfacht)" : "English Structure (starter parser)";
+      label.setAttribute("font-size", "11");
+      label.textContent = "Reed–Kellogg Traditional Diagram (baseline + specific connectors)";
       svg.appendChild(label);
 
       container.appendChild(svg);
