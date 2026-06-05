@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sentance Diagrams — Troy Altus</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --border: #2a2d3a;
+      --accent: #4f8ef7;
+      --accent2: #e06c4a;
+      --text: #e2e4ec;
+      --muted: #8890a8;
+      --tag-ling: rgba(212,160,68,0.15);
+      --ling: #d4a044;
+    }
+    * { box-sizing: border-box; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 1rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    header h1 {
+      font-size: 1.6rem;
+      margin: 0 0 0.25rem;
+    }
+    header .meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 3rem;
+    }
+    .controls {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    .lang-pills {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .lang-pill {
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.1s;
+    }
+    .lang-pill.active {
+      background: var(--tag-ling);
+      color: var(--ling);
+      border-color: var(--ling);
+    }
+    .lang-pill.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    textarea {
+      width: 100%;
+      min-height: 80px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.75rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+      resize: vertical;
+    }
+    button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.1rem;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button.secondary {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .examples {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.5rem;
+    }
+    .example-btn {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.6rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .example-btn:hover {
+      color: var(--text);
+      border-color: var(--accent);
+    }
+    .diagram-container {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+      min-height: 320px;
+      margin: 1rem 0;
+      overflow: auto;
+    }
+    .section {
+      margin-top: 1.5rem;
+    }
+    .section h3 {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+    .tree {
+      font-family: ui-monospace, monospace;
+    }
+    svg {
+      max-width: 100%;
+      height: auto;
+    }
+    .node rect {
+      fill: #24283b;
+      stroke: var(--border);
+      stroke-width: 1;
+    }
+    .node text {
+      fill: var(--text);
+      font-size: 13px;
+      font-family: ui-monospace, monospace;
+    }
+    .edge {
+      stroke: var(--accent);
+      stroke-width: 1.5;
+    }
+    .word {
+      font-weight: 600;
+    }
+    .meta {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .output-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .panel {
+      flex: 1;
+      min-width: 280px;
+    }
+    .parse-json {
+      background: #111318;
+      border: 1px solid var(--border);
+      padding: 0.75rem;
+      border-radius: 6px;
+      font-family: ui-monospace, monospace;
+      font-size: 0.82rem;
+      white-space: pre;
+      overflow: auto;
+      max-height: 220px;
+    }
+    footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 3px;
+      background: var(--tag-ling);
+      color: var(--ling);
+      margin-right: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Sentance Diagrams</h1>
+    <div class="meta">
+      Interactive visual sentence diagramming • English &amp; German now • Spanish, Latin, Greek planned
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="controls">
+      <div>
+        <div style="margin-bottom:0.3rem; font-size:0.8rem; color:var(--muted);">Language</div>
+        <div class="lang-pills">
+          <div class="lang-pill active" data-lang="en" onclick="setLang('en')">English</div>
+          <div class="lang-pill" data-lang="de" onclick="setLang('de')">German</div>
+          <div class="lang-pill disabled" data-lang="es">Spanish <small>(soon)</small></div>
+          <div class="lang-pill disabled" data-lang="la">Latin <small>(soon)</small></div>
+          <div class="lang-pill disabled" data-lang="grc">Greek <small>(soon)</small></div>
+        </div>
+      </div>
+
+      <div style="flex:1; min-width:220px;">
+        <div style="margin-bottom:0.3rem; font-size:0.8rem; color:var(--muted);">Sentence</div>
+        <textarea id="input" placeholder="The quick brown fox jumps over the lazy dog."></textarea>
+        <div class="examples" id="examples"></div>
+      </div>
+
+      <div>
+        <button onclick="parseAndRender()">Diagram it</button>
+        <button class="secondary" onclick="clearAll()">Clear</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+        <div><span class="tag">Traditional</span> <span style="color:var(--muted); font-size:0.85rem;">Reed-Kellogg style (horizontal)</span></div>
+        <div>
+          <button class="secondary" onclick="downloadSVG('traditional')">SVG</button>
+        </div>
+      </div>
+      <div class="diagram-container" id="traditional-diagram"></div>
+    </div>
+
+    <div class="section">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+        <div><span class="tag">Syntax Tree</span> <span style="color:var(--muted); font-size:0.85rem;">Constituency / phrase structure</span></div>
+        <div>
+          <button class="secondary" onclick="downloadSVG('tree')">SVG</button>
+          <button class="secondary" onclick="copyMermaid()">Copy Mermaid</button>
+        </div>
+      </div>
+      <div class="diagram-container" id="tree-diagram"></div>
+    </div>
+
+    <div class="output-row">
+      <div class="panel">
+        <div class="section">
+          <h3>Editable Parse (JSON)</h3>
+          <textarea id="parse-json" class="parse-json" style="width:100%; height:180px;" oninput="reRenderFromJSON()"></textarea>
+          <div class="meta">Edit and the diagrams will update live. Great for correcting the starter parser or teaching.</div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="section">
+          <h3>Bracket Notation</h3>
+          <div id="bracket" class="parse-json" style="min-height:80px;"></div>
+          <button class="secondary" onclick="copyBracket()" style="margin-top:0.4rem;">Copy</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>
+        This is a <strong>rule-based starter</strong> for demonstration and language learning.
+        Real systems use statistical or neural parsers (spaCy, Stanza, UDPipe, etc.).
+        The structure is deliberately simple so it is easy to extend to new languages.
+      </p>
+      <p style="margin-top:0.6rem;">
+        <strong>Planned:</strong> Spanish, Latin, Ancient Greek • Better PP attachment • Clause handling • Export to LaTeX tikz-qtree • Dependency view
+      </p>
+    </footer>
+  </div>
+
+  <script>
+    // Design tokens (copied from troyaltus.com)
+    const COLORS = {
+      bg: '#0f1117',
+      surface: '#1a1d27',
+      border: '#2a2d3a',
+      accent: '#4f8ef7',
+      text: '#e2e4ec',
+      muted: '#8890a8',
+      ling: '#d4a044'
+    };
+
+    let currentLang = 'en';
+    let currentTree = null;
+
+    const EXAMPLES = {
+      en: [
+        "The quick brown fox jumps over the lazy dog.",
+        "Students in the advanced linguistics seminar carefully analyzed complex German sentences yesterday.",
+        "She gave the old book to her younger brother on his birthday."
+      ],
+      de: [
+        "Der schnelle braune Fuchs springt über den faulen Hund.",
+        "Die Studenten analysierten gestern komplexe Sätze in dem Seminar.",
+        "Sie gab dem jüngeren Bruder das alte Buch zum Geburtstag."
+      ]
+    };
+
+    function setLang(lang) {
+      if (lang === 'es' || lang === 'la' || lang === 'grc') {
+        alert('Support for ' + lang + ' is planned. The UI and tree renderer are already language-agnostic.');
+        return;
+      }
+      currentLang = lang;
+      document.querySelectorAll('.lang-pill').forEach(p => {
+        p.classList.toggle('active', p.dataset.lang === lang);
+      });
+      // update examples
+      renderExamples();
+    }
+
+    function renderExamples() {
+      const container = document.getElementById('examples');
+      container.innerHTML = '';
+      const exs = EXAMPLES[currentLang] || EXAMPLES.en;
+      exs.forEach((ex, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'example-btn';
+        btn.textContent = ex.length > 55 ? ex.slice(0,52) + '...' : ex;
+        btn.onclick = () => {
+          document.getElementById('input').value = ex;
+          parseAndRender();
+        };
+        container.appendChild(btn);
+      });
+    }
+
+    function tokenize(sentence) {
+      return sentence.trim().replace(/[.,!?;:]$/, '').split(/\s+/);
+    }
+
+    // Very basic but surprisingly useful starter parsers
+    function parseEnglish(sentence) {
+      const words = tokenize(sentence);
+      if (words.length === 0) return { type: 'S', children: [] };
+
+      // Naive verb finder
+      const verbIdx = words.findIndex(w => 
+        /^(is|are|was|were|jumps?|runs?|sits?|gave?|gave|analyzed?|analysiert?)$/i.test(w)
+      );
+      const vIndex = verbIdx > 0 ? verbIdx : Math.floor(words.length / 2);
+
+      const subjectWords = words.slice(0, vIndex);
+      const rest = words.slice(vIndex);
+
+      // Very crude object / PP split
+      let objectWords = [];
+      let ppWords = [];
+      let verbWord = rest[0] || 'VERB';
+
+      for (let i = 1; i < rest.length; i++) {
+        const w = rest[i];
+        if (/^(over|on|in|to|for|with|by|at)$/i.test(w) && ppWords.length === 0) {
+          ppWords = rest.slice(i);
+          break;
+        } else {
+          objectWords.push(w);
+        }
+      }
+
+      const tree = {
+        type: 'S',
+        children: [
+          {
+            type: 'NP',
+            children: subjectWords.map((w, i) => ({
+              type: i === 0 && /^(the|a|an|der|die|das)$/i.test(w) ? 'Det' : 'N',
+              word: w
+            }))
+          },
+          {
+            type: 'VP',
+            children: [
+              { type: 'V', word: verbWord },
+              ...(objectWords.length ? [{
+                type: 'NP',
+                children: objectWords.map(w => ({ type: 'N', word: w }))
+              }] : [])
+            ]
+          }
+        ]
+      };
+
+      if (ppWords.length > 0) {
+        tree.children[1].children.push({
+          type: 'PP',
+          children: ppWords.map((w, i) => ({
+            type: i === 0 ? 'P' : 'NP',
+            word: w
+          }))
+        });
+      }
+      return tree;
+    }
+
+    function parseGerman(sentence) {
+      const words = tokenize(sentence);
+      if (words.length === 0) return { type: 'S', children: [] };
+
+      // German: verb often in 2nd position (V2)
+      let vIndex = words.findIndex(w => 
+        /^(ist|sind|war|waren|springt|läuft|sitzt|gab|analysierten|gabst)$/i.test(w)
+      );
+      if (vIndex < 0) vIndex = 1; // assume second word
+
+      const pre = words.slice(0, vIndex); // often subject or topic
+      const verb = words[vIndex];
+      const post = words.slice(vIndex + 1);
+
+      // Very rough: first part of post as object, look for PPs
+      let object = [];
+      let pp = [];
+      for (let i = 0; i < post.length; i++) {
+        if (/^(über|in|auf|zu|für|mit|von|an)$/i.test(post[i]) && pp.length === 0) {
+          pp = post.slice(i);
+          break;
+        }
+        object.push(post[i]);
+      }
+
+      return {
+        type: 'S',
+        children: [
+          {
+            type: 'NP',
+            label: 'Vorfeld',
+            children: pre.map(w => ({ type: 'N', word: w }))
+          },
+          { type: 'V', word: verb, label: 'finite Verb' },
+          ...(object.length ? [{
+            type: 'NP',
+            label: 'Objekt',
+            children: object.map(w => ({ type: 'N', word: w }))
+          }] : []),
+          ...(pp.length ? [{
+            type: 'PP',
+            children: pp.map((w, i) => ({ type: i === 0 ? 'P' : 'NP', word: w }))
+          }] : [])
+        ]
+      };
+    }
+
+    function parseSentence(sentence, lang) {
+      if (lang === 'de') return parseGerman(sentence);
+      return parseEnglish(sentence);
+    }
+
+    function renderTraditionalDiagram(tree, containerId) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+
+      const svgNS = "http://www.w3.org/2000/svg";
+      const svg = document.createElementNS(svgNS, "svg");
+      svg.setAttribute("width", "100%");
+      svg.setAttribute("height", "220");
+      svg.setAttribute("viewBox", "0 0 900 220");
+
+      // Simple horizontal baseline diagram (Reed-Kellogg approximation)
+      let x = 80;
+      const y = 110;
+      const lineY = 130;
+
+      // Draw main line
+      const mainLine = document.createElementNS(svgNS, "line");
+      mainLine.setAttribute("x1", "40");
+      mainLine.setAttribute("y1", lineY);
+      mainLine.setAttribute("x2", "860");
+      mainLine.setAttribute("y2", lineY);
+      mainLine.setAttribute("stroke", COLORS.accent);
+      mainLine.setAttribute("stroke-width", "2.5");
+      svg.appendChild(mainLine);
+
+      function addWord(text, xPos, isVerb = false) {
+        const txt = document.createElementNS(svgNS, "text");
+        txt.setAttribute("x", xPos);
+        txt.setAttribute("y", y);
+        txt.setAttribute("text-anchor", "middle");
+        txt.setAttribute("fill", isVerb ? COLORS.ling : COLORS.text);
+        txt.setAttribute("font-size", "15");
+        txt.setAttribute("font-weight", isVerb ? "700" : "500");
+        txt.textContent = text;
+        svg.appendChild(txt);
+
+        // vertical divider
+        const v = document.createElementNS(svgNS, "line");
+        v.setAttribute("x1", xPos);
+        v.setAttribute("y1", lineY - 8);
+        v.setAttribute("x2", xPos);
+        v.setAttribute("y2", lineY + 8);
+        v.setAttribute("stroke", COLORS.border);
+        v.setAttribute("stroke-width", "1.5");
+        svg.appendChild(v);
+      }
+
+      // Very rough linear layout from the tree
+      function walk(node, depth = 0) {
+        if (node.word) {
+          const isVerb = node.type === 'V';
+          addWord(node.word, x, isVerb);
+          x += (node.word.length * 9) + 28;
+        }
+        if (node.children) {
+          node.children.forEach(child => walk(child, depth + 1));
+        }
+      }
+
+      walk(tree);
+
+      // Labels
+      const label = document.createElementNS(svgNS, "text");
+      label.setAttribute("x", "450");
+      label.setAttribute("y", "40");
+      label.setAttribute("text-anchor", "middle");
+      label.setAttribute("fill", COLORS.muted);
+      label.setAttribute("font-size", "12");
+      label.textContent = currentLang === 'de' ? "Deutsche Struktur (vereinfacht)" : "English Structure (starter parser)";
+      svg.appendChild(label);
+
+      container.appendChild(svg);
+    }
+
+    function renderTreeDiagram(tree, containerId) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+
+      const svgNS = "http://www.w3.org/2000/svg";
+      const svg = document.createElementNS(svgNS, "svg");
+      svg.setAttribute("width", "100%");
+      svg.setAttribute("height", "340");
+      svg.setAttribute("viewBox", "0 0 1000 340");
+
+      // Simple layered tree layout
+      let nodeId = 0;
+      const positions = {};
+
+      function layout(node, depth = 0, xPos = 500) {
+        const id = nodeId++;
+        positions[id] = { x: xPos, y: 40 + depth * 55, node };
+        let children = node.children || [];
+        if (children.length === 0) return;
+
+        const spacing = Math.max(80, 620 / children.length);
+        let startX = xPos - (children.length - 1) * spacing / 2;
+
+        children.forEach((child, i) => {
+          layout(child, depth + 1, startX + i * spacing);
+        });
+      }
+
+      layout(tree);
+
+      // Draw edges first
+      Object.keys(positions).forEach(id => {
+        const p = positions[id];
+        const children = p.node.children || [];
+        children.forEach(child => {
+          // find child position by walking again (simple)
+          // instead we store reverse
+        });
+      });
+
+      // Better: store parent links
+      const edges = [];
+      function collectEdges(node, parentId = null) {
+        const id = nodeId++; // reuse? bad. redo ids
+        if (parentId !== null) {
+          edges.push([parentId, id]);
+        }
+        const myId = Object.keys(positions).length; // hacky
+        if (node.children) node.children.forEach(c => collectEdges(c, id));
+      }
+      // Reset and do proper pass
+      nodeId = 0;
+      const nodeMap = {};
+      function assignIds(node, depth = 0, x = 500) {
+        const id = nodeId++;
+        nodeMap[id] = { node, x, y: 55 + depth * 58 };
+        if (node.children) {
+          const n = node.children.length;
+          const spread = Math.min(620, n * 95);
+          const start = x - spread / 2;
+          node.children.forEach((c, i) => {
+            assignIds(c, depth + 1, start + (i + 0.5) * (spread / n));
+          });
+        }
+      }
+      assignIds(tree);
+
+      // Draw edges
+      Object.keys(nodeMap).forEach(pid => {
+        const p = nodeMap[pid];
+        if (!p.node.children) return;
+        p.node.children.forEach(child => {
+          // find the child's id by searching (slow but fine for small trees)
+          let childId = null;
+          Object.keys(nodeMap).forEach(cid => {
+            if (nodeMap[cid].node === child) childId = cid;
+          });
+          if (childId) {
+            const c = nodeMap[childId];
+            const line = document.createElementNS(svgNS, "line");
+            line.setAttribute("x1", p.x);
+            line.setAttribute("y1", p.y + 18);
+            line.setAttribute("x2", c.x);
+            line.setAttribute("y2", c.y - 18);
+            line.setAttribute("stroke", COLORS.accent);
+            line.setAttribute("stroke-width", "1.8");
+            line.setAttribute("opacity", "0.75");
+            svg.appendChild(line);
+          }
+        });
+      });
+
+      // Draw nodes
+      Object.keys(nodeMap).forEach(id => {
+        const { node, x, y } = nodeMap[id];
+        const g = document.createElementNS(svgNS, "g");
+
+        const rect = document.createElementNS(svgNS, "rect");
+        const label = node.type + (node.label ? ' ' + node.label : '');
+        const w = Math.max(58, label.length * 7.2 + 18);
+        rect.setAttribute("x", x - w/2);
+        rect.setAttribute("y", y - 16);
+        rect.setAttribute("width", w);
+        rect.setAttribute("height", "32");
+        rect.setAttribute("rx", "5");
+        rect.setAttribute("fill", node.word ? "#1f2333" : "#24283b");
+        rect.setAttribute("stroke", node.word ? COLORS.ling : COLORS.border);
+        rect.setAttribute("stroke-width", node.word ? "1.5" : "1");
+        g.appendChild(rect);
+
+        const txt = document.createElementNS(svgNS, "text");
+        txt.setAttribute("x", x);
+        txt.setAttribute("y", y + 5);
+        txt.setAttribute("text-anchor", "middle");
+        txt.setAttribute("fill", node.word ? COLORS.ling : COLORS.text);
+        txt.setAttribute("font-size", node.word ? "13" : "12");
+        txt.setAttribute("font-weight", node.word ? "600" : "500");
+        txt.textContent = node.word || label;
+        g.appendChild(txt);
+
+        svg.appendChild(g);
+      });
+
+      container.appendChild(svg);
+    }
+
+    function updateOutputs(tree) {
+      currentTree = tree;
+      const jsonEl = document.getElementById('parse-json');
+      jsonEl.value = JSON.stringify(tree, null, 2);
+
+      const bracketEl = document.getElementById('bracket');
+      bracketEl.textContent = toBracket(tree);
+    }
+
+    function toBracket(node) {
+      if (node.word) return node.word;
+      const kids = (node.children || []).map(toBracket).join(' ');
+      return `(${node.type}${node.label ? '-' + node.label : ''} ${kids})`;
+    }
+
+    function reRenderFromJSON() {
+      try {
+        const jsonEl = document.getElementById('parse-json');
+        const tree = JSON.parse(jsonEl.value);
+        renderTraditionalDiagram(tree, 'traditional-diagram');
+        renderTreeDiagram(tree, 'tree-diagram');
+        document.getElementById('bracket').textContent = toBracket(tree);
+        currentTree = tree;
+      } catch (e) {
+        // ignore while typing
+      }
+    }
+
+    function parseAndRender() {
+      const input = document.getElementById('input').value.trim();
+      if (!input) return;
+
+      const tree = parseSentence(input, currentLang);
+      renderTraditionalDiagram(tree, 'traditional-diagram');
+      renderTreeDiagram(tree, 'tree-diagram');
+      updateOutputs(tree);
+    }
+
+    function clearAll() {
+      document.getElementById('input').value = '';
+      document.getElementById('traditional-diagram').innerHTML = '';
+      document.getElementById('tree-diagram').innerHTML = '';
+      document.getElementById('parse-json').value = '';
+      document.getElementById('bracket').textContent = '';
+      currentTree = null;
+    }
+
+    function downloadSVG(which) {
+      const container = document.getElementById(which + '-diagram');
+      const svg = container.querySelector('svg');
+      if (!svg) return alert('Diagram not rendered yet.');
+
+      const serializer = new XMLSerializer();
+      let source = serializer.serializeToString(svg);
+      source = '<?xml version="1.0" standalone="no"?>\n' + source;
+
+      const blob = new Blob([source], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `sentance-diagram-${which}-${currentLang}.svg`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function copyMermaid() {
+      if (!currentTree) return alert('Parse something first.');
+      const mermaid = treeToMermaid(currentTree);
+      navigator.clipboard.writeText(mermaid).then(() => {
+        const orig = event.target ? event.target.textContent : '';
+        // simple feedback
+        const btns = document.querySelectorAll('button');
+        // not perfect but ok
+        alert('Mermaid flowchart copied. Paste into https://mermaid.live');
+      });
+    }
+
+    function treeToMermaid(node, id = 'root') {
+      let out = 'flowchart TD\n';
+      function walk(n, pid) {
+        const nid = pid + '_' + (n.type || 'w').replace(/\W/g,'');
+        const label = n.word ? `"${n.word}"` : n.type + (n.label ? ` ${n.label}` : '');
+        out += `  ${pid} --> ${nid}["${label}"]\n`;
+        if (n.children) n.children.forEach(c => walk(c, nid));
+      }
+      walk(node, 'S');
+      return out;
+    }
+
+    function copyBracket() {
+      const text = document.getElementById('bracket').textContent;
+      if (!text) return;
+      navigator.clipboard.writeText(text);
+      alert('Bracket notation copied.');
+    }
+
+    function init() {
+      // Seed an example
+      document.getElementById('input').value = EXAMPLES.en[0];
+      renderExamples();
+      setLang('en');
+
+      // Initial parse
+      setTimeout(() => {
+        parseAndRender();
+      }, 120);
+
+      // Keyboard support
+      document.getElementById('input').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+          e.preventDefault();
+          parseAndRender();
+        }
+      });
+
+      // Make lang pills nicer
+      console.log('%c[Sentance Diagrams] Tool ready. Extensible parser architecture in place.', 'color:#666');
+    }
+
+    window.setLang = setLang;
+    window.parseAndRender = parseAndRender;
+
+    init();
+  </script>
+</body>
+</html>
