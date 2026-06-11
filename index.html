@@ -45,6 +45,13 @@
       color: var(--text);
     }
 
+    header .tagline {
+      margin-top: 0.35rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
     header p {
       margin-top: 0.4rem;
       color: var(--muted);
@@ -276,18 +283,24 @@
 
 <header>
   <h1>Troy Altus</h1>
+  <p class="tagline">Systems Engineer / Ballistician &mdash; Solid Rocket Motor Propulsion &amp; Performance</p>
   <div class="links">
+    <a href="https://www.linkedin.com/in/troy-altus" target="_blank" rel="noopener">LinkedIn</a>
     <a href="https://github.com/altustd" target="_blank" rel="noopener">GitHub</a>
     <a href="mailto:altustd@gmail.com">Email</a>
   </div>
   <p class="bio">
-    A sandbox for topics I find interesting &mdash; computational linguistics, optimization, engineering history, causal inference. Some of it connects to my day job in propulsion. Most of it doesn't. Built with AI assistance, checked by me.
+    20+ years across aerospace, oil &amp; gas, and power generation. Built internal ballistics models for SM-3, Star 48, and other solid rocket motor programs at ATK; performed independent verification &amp; validation of launch vehicle SRBs for NASA's Launch Services Program; analyzed hydrogen combustor test data at GE Vernova.
+  </p>
+  <p class="bio">
+    This site is where that background meets a parallel interest in optimization, computational linguistics, and applied data science &mdash; most of it built with AI assistance, checked by me.
   </p>
 </header>
 
 <main>
 
-  <p class="section-label">History &amp; Engineering</p>
+  <p class="section-label">Featured</p>
+  <p class="section-note">Most relevant to propulsion, ballistics, and applied optimization work.</p>
   <div class="grid">
 
     <a class="card" href="https://solid-rocket-genealogy-ebook.netlify.app" target="_blank" rel="noopener">
@@ -299,16 +312,6 @@
 
     <div class="card card-multi">
       <span class="card-tag tag-rocket">History</span>
-      <div class="card-title">Friction and Flow</div>
-      <div class="card-subtitle">The history and mystery of the Navier-Stokes equations &mdash; five men, one equation, and a million-dollar proof no one has found</div>
-      <div class="card-links">
-        <a href="https://altustd.github.io/navier-stokes-history/" target="_blank" rel="noopener">Read HTML &rarr;</a>
-        <a href="https://altustd.github.io/navier-stokes-history/Friction-and-Flow.pdf" target="_blank" rel="noopener">&darr; PDF</a>
-      </div>
-    </div>
-
-    <div class="card card-multi">
-      <span class="card-tag tag-rocket">History</span>
       <div class="card-title">In Search of the Optimum</div>
       <div class="card-subtitle">A narrative history of mathematical optimization from Queen Dido to Karmarkar &mdash; ten mathematicians, two World Wars, and a polynomial-time algorithm that rattled AT&amp;T</div>
       <div class="card-links">
@@ -317,17 +320,32 @@
       </div>
     </div>
 
-  </div>
-
-  <p class="section-label">Data Science &amp; Optimization</p>
-  <div class="grid">
-
     <a class="card" href="https://altustd.github.io/ops-research-ebook" target="_blank" rel="noopener">
       <span class="card-tag tag-ds">Operations Research</span>
       <div class="card-title">Data Science Tools for Classical Operations Research</div>
       <div class="card-subtitle">Python Implementation of Numerical Optimization &amp; Modern OR</div>
       <div class="card-arrow">Read &rarr;</div>
     </a>
+
+  </div>
+
+  <p class="section-label">History &amp; Engineering</p>
+  <div class="grid">
+
+    <div class="card card-multi">
+      <span class="card-tag tag-rocket">History</span>
+      <div class="card-title">Friction and Flow</div>
+      <div class="card-subtitle">The history and mystery of the Navier-Stokes equations &mdash; five men, one equation, and a million-dollar proof no one has found</div>
+      <div class="card-links">
+        <a href="https://altustd.github.io/navier-stokes-history/" target="_blank" rel="noopener">Read HTML &rarr;</a>
+        <a href="https://altustd.github.io/navier-stokes-history/Friction-and-Flow.pdf" target="_blank" rel="noopener">&darr; PDF</a>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="section-label">Data Science &amp; Optimization</p>
+  <div class="grid">
 
     <a class="card" href="https://altustd.github.io/causal-inference-python-ebook/" target="_blank" rel="noopener">
       <span class="card-tag tag-ds">Causal Inference</span>
@@ -364,12 +382,11 @@
       <div class="card-arrow">Try the app &rarr;</div>
     </a>
 
-    <a class="card" href="https://github.com/altustd/podcast-whisper" target="_blank" rel="noopener">
+    <div class="card">
       <span class="card-tag tag-ds">Tool</span>
       <div class="card-title">podcast-whisper</div>
-      <div class="card-subtitle">Local podcast transcription and research mining &mdash; Whisper + yt-dlp, no cloud, no API keys</div>
-      <div class="card-arrow">View &rarr;</div>
-    </a>
+      <div class="card-subtitle">Local podcast transcription and research mining &mdash; Whisper + yt-dlp, no cloud, no API keys. (Private repo &mdash; built for personal use.)</div>
+    </div>
 
   </div>
 
@@ -427,10 +444,10 @@
       <div class="card-arrow">Read &rarr;</div>
     </a>
 
-    <a class="card" href="sentance-diagrams.html" target="_blank" rel="noopener">
+    <a class="card" href="sentence-diagrams.html" target="_blank" rel="noopener">
       <span class="card-badge new">New</span>
       <span class="card-tag tag-ling">App</span>
-      <div class="card-title">Sentance Diagrams</div>
+      <div class="card-title">Sentence Diagrams</div>
       <div class="card-subtitle">Interactive visual sentence diagramming for English &amp; German. Traditional Reed-Kellogg + modern syntax trees. Extensible to Spanish, Latin, Greek.</div>
       <div class="card-arrow">Try the tool &rarr;</div>
     </a>

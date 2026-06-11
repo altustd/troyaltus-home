@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sentance Diagrams — Troy Altus</title>
+  <title>Sentence Diagrams — Troy Altus</title>
   <style>
     :root {
       --bg: #0f1117;
@@ -206,7 +206,7 @@
 </head>
 <body>
   <header>
-    <h1>Sentance Diagrams</h1>
+    <h1>Sentence Diagrams</h1>
     <div class="meta">
       Interactive visual sentence diagramming • English &amp; German now • Spanish, Latin, Greek planned
     </div>
@@ -855,7 +855,7 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `sentance-diagram-${which}-${currentLang}.svg`;
+      a.download = `sentence-diagram-${which}-${currentLang}.svg`;
       a.click();
       URL.revokeObjectURL(url);
     }
@@ -911,7 +911,7 @@
       });
 
       // Make lang pills nicer
-      console.log('%c[Sentance Diagrams] Tool ready. Extensible parser architecture in place.', 'color:#666');
+      console.log('%c[Sentence Diagrams] Tool ready. Extensible parser architecture in place.', 'color:#666');
     }
 
     window.setLang = setLang;
