@@ -169,6 +169,7 @@
 
     /* Music section enhancements — subtle nylon-string theme */
     .music-card {
+      position: relative;
       border-top: 2px solid var(--music-accent);
     }
     .music-card:hover {
@@ -285,6 +286,7 @@
   <h1>Troy Altus</h1>
   <p class="tagline">Systems Engineer / Ballistician &mdash; Solid Rocket Motor Propulsion &amp; Performance</p>
   <div class="links">
+    <a href="troy_altus_deep_dives.html">Deep Dives</a>
     <a href="https://www.linkedin.com/in/troy-altus" target="_blank" rel="noopener">LinkedIn</a>
     <a href="https://github.com/altustd" target="_blank" rel="noopener">GitHub</a>
     <a href="mailto:altustd@gmail.com">Email</a>
@@ -499,7 +501,6 @@
   <div class="grid">
 
     <a class="card music-card" href="https://altustd.github.io/classical-guitar/" target="_blank" rel="noopener">
-      <span class="card-badge">New</span>
       <span class="card-tag tag-music">Guitar</span>
       <div class="card-title">Classical Guitar Companion</div>
       <div class="card-subtitle">A practical study guide for nylon-string players &mdash; repertoire, technique, scores in notation + tablature, and deliberate practice strategies with audio</div>
@@ -533,9 +534,10 @@
       const visible = grid.querySelectorAll('.card:not(.coming-soon)');
       if (visible.length === 0) {
         grid.style.display = 'none';
-        const prev = grid.previousElementSibling;
-        if (prev && prev.classList.contains('section-label')) {
-          prev.style.display = 'none';
+        let el = grid.previousElementSibling;
+        while (el && (el.classList.contains('section-note') || el.classList.contains('section-label'))) {
+          el.style.display = 'none';
+          el = el.previousElementSibling;
         }
       }
     });
