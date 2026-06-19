@@ -118,6 +118,48 @@
       color: #5B21B6;
     }
 
+    .section-icon.network {
+      background: #D8F5EC;
+      color: #0F6E56;
+    }
+
+    .month-focus {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-top: 1.5rem;
+      padding: 0.55rem 1rem;
+      border-radius: 999px;
+      background: rgba(15, 110, 86, 0.12);
+      border: 1px solid rgba(15, 110, 86, 0.28);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #0F6E56;
+      text-decoration: none;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .month-focus:hover {
+      background: rgba(15, 110, 86, 0.18);
+      border-color: #0F6E56;
+    }
+    .month-focus .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #0F6E56;
+      box-shadow: 0 0 8px rgba(15, 110, 86, 0.45);
+    }
+
+    .section-focus {
+      border: 1px solid rgba(15, 110, 86, 0.22);
+      border-radius: 14px;
+      padding: 2rem 2rem 1.5rem;
+      background: linear-gradient(180deg, rgba(225, 245, 238, 0.55) 0%, rgba(249, 249, 247, 0) 100%);
+    }
+    .section-focus .section-desc {
+      color: #3d6b5c;
+    }
+
     .deep-dive.wip {
       opacity: 0.45;
       pointer-events: none;
@@ -344,6 +386,19 @@
         background: #1a1a18;
         border-top-color: #444441;
       }
+
+      .section-focus {
+        background: linear-gradient(180deg, rgba(15, 110, 86, 0.14) 0%, rgba(26, 26, 24, 0) 100%);
+        border-color: rgba(78, 201, 160, 0.2);
+      }
+      .section-focus .section-desc {
+        color: #7ec9a8;
+      }
+      .month-focus {
+        background: rgba(15, 110, 86, 0.18);
+        border-color: rgba(78, 201, 160, 0.25);
+        color: #7ec9a8;
+      }
     }
 
     @media (max-width: 768px) {
@@ -397,9 +452,43 @@
       <a href="https://github.com/altustd" target="_blank" rel="noopener">GitHub</a>
       <a href="mailto:altustd@gmail.com">Email</a>
     </div>
+    <a class="month-focus" href="#networks"><span class="dot"></span> June 2026 &mdash; Network Analysis</a>
   </div>
 
   <div class="content">
+    <div class="section section-focus" id="networks">
+      <div class="section-header">
+        <div class="section-icon network">
+          <i class="fas fa-project-diagram"></i>
+        </div>
+        <h2>June 2026 &mdash; Network Analysis</h2>
+        <p class="section-desc">This month&rsquo;s focus: graph theory on real infrastructure &mdash; degree distributions, betweenness centrality, small-world topology, and robustness under random failure vs. targeted attack. First in a series on airports, power grids, and biological networks.</p>
+      </div>
+      <div class="dives-grid">
+        <div class="deep-dive teal">
+          <div class="dive-tag">Network Analysis</div>
+          <h3>US Airport Network</h3>
+          <p class="description">The Architecture of Flight: OpenFlights US domestic routes (541 airports, 2,780 edges). Small-world coefficient &sigma; = 22.0, scale-free degree distribution, betweenness centrality hub rankings, and the classic robust-yet-fragile asymmetry between random failure and targeted attack on high-betweenness nodes.</p>
+          <div class="dive-meta">
+            <span><i class="fas fa-calendar"></i> 2026</span>
+            <span><i class="fas fa-file-alt"></i> Interactive + PDF</span>
+          </div>
+          <a href="https://altustd.github.io/airport-network-analysis/airport-network-analysis.html" target="_blank" rel="noopener" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="deep-dive teal">
+          <div class="dive-tag">Network Analysis</div>
+          <h3>US Power Grid Network</h3>
+          <p class="description">Applies network science to a 2,000-bus synthetic US transmission grid from ARPA-E's Grid Optimization Competition. Tests for small-world topology (&sigma; = 20.1), degree distribution (truncated power law, &gamma;&#770; = 4.1), betweenness centrality concentration, and the &ldquo;robust yet fragile&rdquo; asymmetry between random failure and targeted attack.</p>
+          <div class="dive-meta">
+            <span><i class="fas fa-calendar"></i> 2026</span>
+            <span><i class="fas fa-file-alt"></i> Interactive</span>
+          </div>
+          <a href="https://altustd.github.io/us-power-grid-network/us-power-grid-network.html" target="_blank" rel="noopener" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+
     <div class="section">
       <div class="section-header">
         <div class="section-icon history">
@@ -528,39 +617,6 @@
             <span><i class="fas fa-laptop"></i> App</span>
           </div>
           <a href="https://bird-seed-recommender-vjfkxeoej5axze5seyh3cb.streamlit.app/" target="_blank" class="dive-cta">Try the app <i class="fas fa-arrow-right"></i></a>
-        </div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-header">
-        <div class="section-icon data">
-          <i class="fas fa-project-diagram"></i>
-        </div>
-        <h2>Network Analysis</h2>
-        <p class="section-desc">June 2026 focus — graph theory applied to real infrastructure. First in a series on airports, power grids, and biological networks.</p>
-      </div>
-      <div class="dives-grid">
-        <div class="deep-dive teal">
-          <div class="dive-tag">Network Analysis</div>
-          <h3>US Airport Network</h3>
-          <p class="description">The Architecture of Flight: OpenFlights US domestic routes (541 airports, 2,780 edges). Small-world coefficient &sigma; = 22.0, scale-free degree distribution, betweenness centrality hub rankings, and the classic robust-yet-fragile asymmetry between random failure and targeted attack on high-betweenness nodes.</p>
-          <div class="dive-meta">
-            <span><i class="fas fa-calendar"></i> 2026</span>
-            <span><i class="fas fa-file-alt"></i> Interactive + PDF</span>
-          </div>
-          <a href="https://altustd.github.io/airport-network-analysis/airport-network-analysis.html" target="_blank" rel="noopener" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
-        </div>
-
-        <div class="deep-dive teal">
-          <div class="dive-tag">Network Analysis</div>
-          <h3>US Power Grid Network</h3>
-          <p class="description">Applies network science to a 2,000-bus synthetic US transmission grid from ARPA-E's Grid Optimization Competition. Tests for small-world topology (&sigma; = 20.1), degree distribution (truncated power law, &gamma;&#770; = 4.1), betweenness centrality concentration, and the &ldquo;robust yet fragile&rdquo; asymmetry between random failure and targeted attack.</p>
-          <div class="dive-meta">
-            <span><i class="fas fa-calendar"></i> 2026</span>
-            <span><i class="fas fa-file-alt"></i> Interactive</span>
-          </div>
-          <a href="https://altustd.github.io/us-power-grid-network/us-power-grid-network.html" target="_blank" rel="noopener" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
         </div>
       </div>
     </div>
