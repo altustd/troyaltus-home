@@ -21,8 +21,10 @@
       --tag-ivv:    rgba(164,126,232,0.15);
       --tag-ling:   rgba(212,160,68,0.15);
       --tag-music:  rgba(139,92,160,0.15);
+      --tag-micro:  rgba(184,134,11,0.15);
       --music-accent: #8b5a9f;
       --net-accent: #4ec9a0;
+      --micro-accent: #d4a84b;
     }
 
     body {
@@ -198,6 +200,15 @@
     .tag-ivv    { background: var(--tag-ivv);    color: #a47ee8; }
     .tag-ling   { background: var(--tag-ling);   color: #d4a044; }
     .tag-music  { background: var(--tag-music);  color: #8b5a9f; }
+    .tag-micro  { background: var(--tag-micro);  color: var(--micro-accent); }
+
+    .micro-card {
+      border-top: 2px solid var(--micro-accent);
+    }
+    .micro-card:hover {
+      border-color: var(--micro-accent);
+      border-top-color: #e8c068;
+    }
 
     .accent-ds { border-top: 2px solid var(--accent2); }
 
@@ -357,6 +368,33 @@
       <div class="card-subtitle">What a blackout teaches you about the few transmission paths the grid cannot afford to lose &mdash; and why knocking out the right one hurts far more than random bad luck</div>
       <div class="card-arrow">Read &rarr;</div>
     </a>
+
+  </div>
+
+  <p class="section-label" id="microhistories">Microhistories</p>
+  <p class="section-note">Mark Kurlansky&ndash;style PDFs for a single sitting (~2 hours). Mundane objects, hidden worlds &mdash; the salt on your table, the zipper on your coat, the pencil in your hand.</p>
+  <div class="grid">
+
+    <div class="card card-multi micro-card">
+      <span class="card-badge new">New</span>
+      <span class="card-tag tag-micro">Microhistory</span>
+      <div class="card-title">The Pencil</div>
+      <div class="card-subtitle">Graphite, cedar, and the line that drew the modern world &mdash; from Borrowdale&rsquo;s guarded mines to the space-pen myth and the classroom No.&nbsp;2</div>
+      <div class="card-links">
+        <a href="https://altustd.github.io/microhistories/" target="_blank" rel="noopener">Browse shelf &rarr;</a>
+        <a href="https://altustd.github.io/microhistories/The-Pencil.pdf" target="_blank" rel="noopener">&darr; PDF</a>
+      </div>
+    </div>
+
+    <div class="card card-multi micro-card">
+      <span class="card-tag tag-micro">Microhistory</span>
+      <div class="card-title">The Zipper</div>
+      <div class="card-subtitle">The humble fastener that changed how we dress, work, fight, and live &mdash; from Judson&rsquo;s failed clasp locker to YKK&rsquo;s billions</div>
+      <div class="card-links">
+        <a href="https://altustd.github.io/microhistories/" target="_blank" rel="noopener">Browse shelf &rarr;</a>
+        <a href="https://altustd.github.io/microhistories/The-Zipper.pdf" target="_blank" rel="noopener">&darr; PDF</a>
+      </div>
+    </div>
 
   </div>
 
