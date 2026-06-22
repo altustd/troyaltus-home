@@ -323,6 +323,54 @@
       opacity: 0.75;
     }
     .card-links a:hover { opacity: 1; text-decoration: underline; }
+
+    .site-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 0.75rem;
+      justify-content: center;
+      margin-top: 1.25rem;
+    }
+    .site-nav a {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.35rem 0.7rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+    .site-nav a:hover {
+      color: var(--text);
+      border-color: var(--accent);
+      background: rgba(79, 142, 247, 0.08);
+    }
+
+    .pillar-label {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 0.35rem;
+      padding-bottom: 0;
+      border-bottom: none;
+      text-transform: none;
+    }
+    .pillar-note {
+      margin-bottom: 1.5rem;
+    }
+    .series-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--net-accent);
+      margin: 0 0 0.9rem;
+    }
+    .card-ep .card-tag { color: var(--net-accent); }
   </style>
 </head>
 <body>
@@ -338,48 +386,67 @@
   <p class="bio">
     Data projects on subjects that seem mundane until you look closely &mdash; the salt on your table, the flight you almost made, the grid behind the switch.
   </p>
-  <a class="month-focus" href="#networks"><span class="dot"></span> June 2026 &mdash; Networks</a>
+  <nav class="site-nav" aria-label="Library sections">
+    <a href="#hidden-worlds">Hidden Worlds</a>
+    <a href="#long-reads">Long Reads</a>
+    <a href="#data-science">Data Science</a>
+    <a href="#tools">Tools</a>
+    <a href="#verification">Verification</a>
+    <a href="#language">Language</a>
+    <a href="#music">Music</a>
+  </nav>
 </header>
 
 <main>
 
-  <p class="section-label section-focus" id="networks">June 2026 &mdash; Networks</p>
-  <p class="section-note">The invisible systems behind everyday life &mdash; the flight you almost made, the line that kept the lights on. Data on things nobody notices until they fail. <strong>Start with <a href="https://altustd.github.io/network-analysis-intro/" style="color:var(--net-accent);">Hidden Maps</a></strong> if network analysis is new to you.</p>
+  <p class="section-label pillar-label" id="hidden-worlds">Hidden Worlds</p>
+  <p class="section-note pillar-note">The Kurlansky thread &mdash; mundane things that run the world. Two series: <strong>Hidden Maps</strong> (interactive network studies, start with the primer) and <strong>Microhistories</strong> (~2-hour PDFs).</p>
+
+  <p class="series-label" id="hidden-maps">Hidden Maps &mdash; network series</p>
+  <p class="section-note">Read in order if you&rsquo;re learning network analysis. Episode 0 is the plain-language primer; episodes 1&ndash;4 are sky, grid, streets, internet.</p>
   <div class="grid">
 
-    <a class="card network-card" href="https://altustd.github.io/network-analysis-intro/" target="_blank" rel="noopener">
+    <a class="card network-card card-ep" href="https://altustd.github.io/network-analysis-intro/" target="_blank" rel="noopener">
       <span class="card-badge new">Start here</span>
-      <span class="card-tag tag-net">Network Analysis</span>
+      <span class="card-tag tag-net">Ep. 0 &middot; Primer</span>
       <div class="card-title">Hidden Maps</div>
-      <div class="card-subtitle">A plain-language guide to the series &mdash; dots, lines, hubs, chokepoints, and why random bad luck is not the same as hitting the right airport, substation, or intersection</div>
+      <div class="card-subtitle">Dots, lines, hubs, and chokepoints &mdash; the shared vocabulary for the whole series, no math background required</div>
       <div class="card-arrow">Read &rarr;</div>
     </a>
 
-    <a class="card network-card" href="https://altustd.github.io/road-network-resilience/road-network-resilience.html" target="_blank" rel="noopener">
-      <span class="card-tag tag-net">Network Analysis</span>
-      <div class="card-title">The Intersections That Hold a City</div>
-      <div class="card-subtitle">Why closing one Pittsburgh junction can strand half the city &mdash; and why most random street closures barely matter until you hit the load-bearing ones</div>
-      <div class="card-arrow">Read &rarr;</div>
-    </a>
-
-    <a class="card network-card" href="https://altustd.github.io/airport-network-analysis/airport-network-analysis.html" target="_blank" rel="noopener">
-      <span class="card-tag tag-net">Network Analysis</span>
+    <a class="card network-card card-ep" href="https://altustd.github.io/airport-network-analysis/airport-network-analysis.html" target="_blank" rel="noopener">
+      <span class="card-tag tag-net">Ep. 1 &middot; Flights</span>
       <div class="card-title">The Architecture of Flight</div>
-      <div class="card-subtitle">Why a delay in Atlanta reaches Pittsburgh and Portland &mdash; America&rsquo;s domestic route map concentrates in a few cities, and the right closure is far worse than bad weather somewhere obscure</div>
+      <div class="card-subtitle">Why a delay in Atlanta reaches Pittsburgh and Portland</div>
       <div class="card-arrow">Read &rarr;</div>
     </a>
 
-    <a class="card network-card" href="https://altustd.github.io/us-power-grid-network/us-power-grid-network.html" target="_blank" rel="noopener">
-      <span class="card-tag tag-net">Network Analysis</span>
+    <a class="card network-card card-ep" href="https://altustd.github.io/us-power-grid-network/us-power-grid-network.html" target="_blank" rel="noopener">
+      <span class="card-tag tag-net">Ep. 2 &middot; The Grid</span>
       <div class="card-title">When the Lights Go Out</div>
-      <div class="card-subtitle">What a blackout teaches you about the few transmission paths the grid cannot afford to lose &mdash; and why knocking out the right one hurts far more than random bad luck</div>
+      <div class="card-subtitle">What a blackout teaches you about the transmission paths the grid cannot afford to lose</div>
+      <div class="card-arrow">Read &rarr;</div>
+    </a>
+
+    <a class="card network-card card-ep" href="https://altustd.github.io/road-network-resilience/road-network-resilience.html" target="_blank" rel="noopener">
+      <span class="card-tag tag-net">Ep. 3 &middot; Streets</span>
+      <div class="card-title">The Intersections That Hold a City</div>
+      <div class="card-subtitle">Why one Pittsburgh junction matters more than twenty random closures</div>
+      <div class="card-arrow">Read &rarr;</div>
+    </a>
+
+    <a class="card network-card card-ep" href="https://altustd.github.io/internet-as-topology/internet-as-topology.html" target="_blank" rel="noopener">
+      <span class="card-badge new">New</span>
+      <span class="card-tag tag-net">Ep. 4 &middot; Internet</span>
+      <div class="card-title">The Handoff Behind Your Click</div>
+      <div class="card-subtitle">Who carries your traffic on the internet&rsquo;s hidden routing map &mdash; and what happens when the right backbone goes down</div>
       <div class="card-arrow">Read &rarr;</div>
     </a>
 
   </div>
 
-  <p class="section-label" id="microhistories">Microhistories</p>
-  <p class="section-note">Mark Kurlansky&ndash;style PDFs for a single sitting (~2 hours). Mundane objects, hidden worlds &mdash; the salt on your table, the zipper on your coat, the pencil in your hand.</p>
+  <p class="series-label" id="microhistories">Microhistories &mdash; ~2-hour PDFs</p>
+  <p class="section-note">Single-sitting reads. Mundane objects, hidden worlds.</p>
   <div class="grid">
 
     <div class="card card-multi micro-card">
@@ -405,8 +472,8 @@
 
   </div>
 
-  <p class="section-label">Featured</p>
-  <p class="section-note">Where a dull subject turns out to run the world.</p>
+  <p class="section-label pillar-label" id="long-reads">Long Reads</p>
+  <p class="section-note pillar-note">Narrative histories and engineering deep dives &mdash; multi-chapter ebooks and monographs.</p>
   <div class="grid">
 
     <a class="card" href="https://solid-rocket-genealogy-ebook.netlify.app" target="_blank" rel="noopener">
@@ -425,18 +492,6 @@
         <a href="https://altustd.github.io/optimization-history/In-Search-of-the-Optimum.pdf" target="_blank" rel="noopener">&darr; PDF</a>
       </div>
     </div>
-
-    <a class="card" href="https://altustd.github.io/ops-research-ebook" target="_blank" rel="noopener">
-      <span class="card-tag tag-ds">Operations Research</span>
-      <div class="card-title">Data Science Tools for Classical Operations Research</div>
-      <div class="card-subtitle">Python Implementation of Numerical Optimization &amp; Modern OR</div>
-      <div class="card-arrow">Read &rarr;</div>
-    </a>
-
-  </div>
-
-  <p class="section-label">History &amp; Engineering</p>
-  <div class="grid">
 
     <div class="card card-multi">
       <span class="card-tag tag-rocket">History</span>
@@ -460,8 +515,16 @@
 
   </div>
 
-  <p class="section-label">Data Science &amp; Optimization</p>
+  <p class="section-label pillar-label" id="data-science">Data Science &amp; Optimization</p>
+  <p class="section-note pillar-note">Methods, models, and reproducible analysis.</p>
   <div class="grid">
+
+    <a class="card" href="https://altustd.github.io/ops-research-ebook" target="_blank" rel="noopener">
+      <span class="card-tag tag-ds">Operations Research</span>
+      <div class="card-title">Data Science Tools for Classical Operations Research</div>
+      <div class="card-subtitle">Python Implementation of Numerical Optimization &amp; Modern OR</div>
+      <div class="card-arrow">Read &rarr;</div>
+    </a>
 
     <a class="card" href="https://altustd.github.io/causal-inference-python-ebook/" target="_blank" rel="noopener">
       <span class="card-tag tag-ds">Causal Inference</span>
@@ -489,7 +552,7 @@
 
   </div>
 
-  <p class="section-label">Tools &amp; Apps</p>
+  <p class="section-label pillar-label" id="tools">Tools &amp; Apps</p>
   <p class="section-note">Standalone interactive tools &mdash; no account required, no API keys, works in the browser.</p>
   <div class="grid">
 
@@ -510,7 +573,7 @@
 
   </div>
 
-  <p class="section-label">Independent Verification &amp; Validation</p>
+  <p class="section-label pillar-label" id="verification">Independent Verification &amp; Validation</p>
   <p class="section-note">Occasional spot-checks of published claims against raw microdata and primary sources. The US Census IV&amp;V series doubles as a tour of what the Census API has to offer &mdash; each note is a potential seed for a future project.</p>
   <div class="grid">
 
@@ -536,7 +599,7 @@
 
   </div>
 
-  <p class="section-label">Computational Linguistics</p>
+  <p class="section-label pillar-label" id="language">Computational Linguistics</p>
   <div class="grid">
 
     <a class="card" href="https://altustd.github.io/etymology-data-science/" target="_blank" rel="noopener">
@@ -605,7 +668,7 @@
 
   </div>
 
-  <p class="section-label">Music &amp; Practice</p>
+  <p class="section-label pillar-label" id="music">Music &amp; Practice</p>
   <p class="section-note">Two companion volumes for deliberate practice on nylon-string instruments. Scores, tablature, audio references, and focused technique guidance.</p>
   <div class="grid">
 
