@@ -128,31 +128,28 @@
       color: #854F0B;
     }
 
-    .month-focus {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.55rem;
-      margin-top: 1.5rem;
-      padding: 0.55rem 1rem;
-      border-radius: 999px;
-      background: rgba(15, 110, 86, 0.12);
-      border: 1px solid rgba(15, 110, 86, 0.28);
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: #0F6E56;
+    .site-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 0.75rem;
+      justify-content: center;
+      margin-top: 1.25rem;
+    }
+    .site-nav a {
+      color: white;
       text-decoration: none;
-      transition: background 0.15s, border-color 0.15s;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.7rem;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.3);
+      transition: all 0.2s;
     }
-    .month-focus:hover {
-      background: rgba(15, 110, 86, 0.18);
-      border-color: #0F6E56;
-    }
-    .month-focus .dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #0F6E56;
-      box-shadow: 0 0 8px rgba(15, 110, 86, 0.45);
+    .site-nav a:hover {
+      background: rgba(255,255,255,0.15);
+      border-color: rgba(255,255,255,0.6);
     }
 
     .section-focus {
@@ -409,11 +406,7 @@
       .section-focus .section-desc {
         color: #7ec9a8;
       }
-      .month-focus {
-        background: rgba(15, 110, 86, 0.18);
-        border-color: rgba(78, 201, 160, 0.25);
-        color: #7ec9a8;
-      }
+
     }
 
     @media (max-width: 768px) {
@@ -467,7 +460,15 @@
       <a href="https://github.com/altustd" target="_blank" rel="noopener">GitHub</a>
       <a href="mailto:altustd@gmail.com">Email</a>
     </div>
-    <a class="month-focus" href="#hidden-worlds"><span class="dot"></span> Hidden Worlds</a>
+    <nav class="site-nav" aria-label="Library sections">
+      <a href="#hidden-worlds">Hidden Worlds</a>
+      <a href="#long-reads">Long Reads</a>
+      <a href="#data-science">Data Science</a>
+      <a href="#tools">Tools</a>
+      <a href="#verification">Verification</a>
+      <a href="#language">Language</a>
+      <a href="#music">Music</a>
+    </nav>
   </div>
 
   <div class="content">
@@ -487,7 +488,7 @@
           <i class="fas fa-project-diagram"></i>
         </div>
         <h2>Hidden Maps</h2>
-        <p class="section-desc">Read Ep.&nbsp;0 first if network analysis is new. Episodes 1&ndash;4: sky, grid, streets, internet.</p>
+        <p class="section-desc">Read Ep.&nbsp;0 first if network analysis is new. Episodes 1&ndash;5: sky, grid, streets, internet, watershed.</p>
       </div>
       <div class="dives-grid">
         <div class="deep-dive teal">
@@ -591,13 +592,13 @@
       </div>
     </div>
 
-    <div class="section">
+    <div class="section" id="long-reads">
       <div class="section-header">
         <div class="section-icon history">
           <i class="fas fa-book"></i>
         </div>
-        <h2>History & Engineering</h2>
-        <p class="section-desc">Tracing the people, decisions, and breakthroughs that shaped modern engineering and technology.</p>
+        <h2>Long Reads</h2>
+        <p class="section-desc">Narrative histories and engineering deep dives &mdash; multi-chapter ebooks and monographs.</p>
       </div>
       <div class="dives-grid">
         <div class="deep-dive coral">
@@ -608,7 +609,7 @@
             <span><i class="fas fa-calendar"></i> 2024</span>
             <span><i class="fas fa-file-alt"></i> Interactive</span>
           </div>
-          <a href="https://solid-rocket-genealogy-ebook.netlify.app" target="_blank" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
+          <a href="https://solid-rocket-genealogy-ebook.netlify.app" target="_blank" rel="noopener" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
         </div>
 
         <div class="deep-dive coral">
@@ -619,7 +620,7 @@
             <span><i class="fas fa-calendar"></i> 2026</span>
             <span><i class="fas fa-file-alt"></i> Interactive + PDF</span>
           </div>
-          <a href="https://altustd.github.io/navier-stokes-history/" target="_blank" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
+          <a href="https://altustd.github.io/navier-stokes-history/" target="_blank" rel="noopener" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
         </div>
 
         <div class="deep-dive coral">
@@ -646,35 +647,35 @@
       </div>
     </div>
 
-    <div class="section">
+    <div class="section" id="data-science">
       <div class="section-header">
         <div class="section-icon data">
           <i class="fas fa-chart-bar"></i>
         </div>
         <h2>Data Science & Optimization</h2>
-        <p class="section-desc">Modern computational techniques applied to classical problems — from optimization and causal reasoning to data analysis.</p>
+        <p class="section-desc">Methods, models, and reproducible analysis.</p>
       </div>
       <div class="dives-grid">
         <div class="deep-dive teal">
           <div class="dive-tag">Operations Research</div>
           <h3>Data Science Tools for Classical Operations Research</h3>
-          <p class="description">Python implementation of numerical optimization and modern operations research. From linear programming to metaheuristics and beyond.</p>
+          <p class="description">Where the simplex method meets Python &mdash; linear programs, metaheuristics, and the puzzles operations research was built to solve.</p>
           <div class="dive-meta">
             <span><i class="fas fa-calendar"></i> 2025</span>
             <span><i class="fas fa-file-alt"></i> Interactive</span>
           </div>
-          <a href="https://altustd.github.io/ops-research-ebook" target="_blank" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
+          <a href="https://altustd.github.io/ops-research-ebook" target="_blank" rel="noopener" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
         </div>
 
         <div class="deep-dive purple">
           <div class="dive-tag">Probability & Reasoning</div>
           <h3>Uncertain Minds</h3>
-          <p class="description">Causal inference, Bayesian reasoning, and the science of learning. Understanding cause-and-effect relationships in an uncertain world.</p>
+          <p class="description">How we fool ourselves about cause and effect &mdash; and what Bayesian reasoning does about it.</p>
           <div class="dive-meta">
             <span><i class="fas fa-calendar"></i> 2024</span>
             <span><i class="fas fa-file-alt"></i> Interactive</span>
           </div>
-          <a href="https://altustd.github.io/causal-inference-python-ebook/" target="_blank" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
+          <a href="https://altustd.github.io/causal-inference-python-ebook/" target="_blank" rel="noopener" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
         </div>
 
         <div class="deep-dive blue">
@@ -685,7 +686,7 @@
             <span><i class="fas fa-calendar"></i> 2026</span>
             <span><i class="fas fa-file-alt"></i> Interactive + PDF</span>
           </div>
-          <a href="https://altustd.github.io/origami-optimization-ebook/" target="_blank" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
+          <a href="https://altustd.github.io/origami-optimization-ebook/" target="_blank" rel="noopener" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
         </div>
 
         <div class="deep-dive blue">
@@ -698,7 +699,18 @@
           </div>
           <a href="https://altustd.github.io/carrier-throttling/" target="_blank" rel="noopener" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
         </div>
+      </div>
+    </div>
 
+    <div class="section" id="tools">
+      <div class="section-header">
+        <div class="section-icon data">
+          <i class="fas fa-laptop-code"></i>
+        </div>
+        <h2>Tools &amp; Apps</h2>
+        <p class="section-desc">Standalone interactive tools &mdash; no account required, no API keys, works in the browser.</p>
+      </div>
+      <div class="dives-grid">
         <div class="deep-dive teal">
           <div class="dive-tag">Expat Analysis</div>
           <h3>Where Should You Go?</h3>
@@ -707,7 +719,7 @@
             <span><i class="fas fa-calendar"></i> 2026</span>
             <span><i class="fas fa-laptop"></i> App + Paper</span>
           </div>
-          <a href="https://expat-destination-analysis-tjxcmbwv3ra2dqxjp4dhkp.streamlit.app/" target="_blank" class="dive-cta">Launch interactive app <i class="fas fa-arrow-right"></i></a>
+          <a href="https://expat-destination-analysis-tjxcmbwv3ra2dqxjp4dhkp.streamlit.app/" target="_blank" rel="noopener" class="dive-cta">Launch interactive app <i class="fas fa-arrow-right"></i></a>
         </div>
 
         <div class="deep-dive teal">
@@ -718,12 +730,12 @@
             <span><i class="fas fa-calendar"></i> 2026</span>
             <span><i class="fas fa-laptop"></i> App</span>
           </div>
-          <a href="https://bird-seed-recommender-vjfkxeoej5axze5seyh3cb.streamlit.app/" target="_blank" class="dive-cta">Try the app <i class="fas fa-arrow-right"></i></a>
+          <a href="https://bird-seed-recommender-vjfkxeoej5axze5seyh3cb.streamlit.app/" target="_blank" rel="noopener" class="dive-cta">Try the app <i class="fas fa-arrow-right"></i></a>
         </div>
       </div>
     </div>
 
-    <div class="section">
+    <div class="section" id="verification">
       <div class="section-header">
         <div class="section-icon ivv">
           <i class="fas fa-clipboard-check"></i>
@@ -741,7 +753,7 @@
             <span><i class="fas fa-calendar"></i> 2026</span>
             <span><i class="fas fa-file-alt"></i> Interactive + PDF</span>
           </div>
-          <a href="https://altustd.github.io/bell-curve-replication/bell-curve-replication.html" target="_blank" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
+          <a href="https://altustd.github.io/bell-curve-replication/bell-curve-replication.html" target="_blank" rel="noopener" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
         </div>
 
         <div class="deep-dive teal">
@@ -752,12 +764,12 @@
             <span><i class="fas fa-calendar"></i> 2026</span>
             <span><i class="fas fa-file-alt"></i> Interactive + PDF</span>
           </div>
-          <a href="https://altustd.github.io/census-ivv/" target="_blank" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
+          <a href="https://altustd.github.io/census-ivv/" target="_blank" rel="noopener" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
         </div>
       </div>
     </div>
 
-    <div class="section">
+    <div class="section" id="language">
       <div class="section-header">
         <div class="section-icon lang">
           <i class="fas fa-language"></i>
@@ -770,12 +782,23 @@
         <div class="deep-dive purple">
           <div class="dive-tag">Survey</div>
           <h3>Etymology + Data Science</h3>
-          <p class="description">A 12-chapter computational tour of historical linguistics: sequence alignment, phylogenetic inference, proto-language reconstruction, and semantic drift — all in Python. From the 19th-century comparative method to modern transformer-based models.</p>
+          <p class="description">Why &ldquo;salt&rdquo; and &ldquo;salary&rdquo; share a root &mdash; and what 150 years of linguistics plus Python can reconstruct from them. A 12-chapter tour from the comparative method to transformer-based proto-language reconstruction.</p>
           <div class="dive-meta">
             <span><i class="fas fa-calendar"></i> 2026</span>
             <span><i class="fas fa-file-alt"></i> Interactive</span>
           </div>
-          <a href="https://altustd.github.io/etymology-data-science/" target="_blank" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
+          <a href="https://altustd.github.io/etymology-data-science/" target="_blank" rel="noopener" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="deep-dive blue">
+          <div class="dive-tag">Technical Paper</div>
+          <h3>Do Technology Words Drift Faster?</h3>
+          <p class="description">Does &ldquo;cloud&rdquo; age faster than &ldquo;tree&rdquo;? Tracking how fast technology words change meaning &mdash; tested against biology, law, and everyday vocabulary.</p>
+          <div class="dive-meta">
+            <span><i class="fas fa-calendar"></i> 2026</span>
+            <span><i class="fas fa-file-alt"></i> Interactive</span>
+          </div>
+          <a href="https://altustd.github.io/semantic-drift-tech/semantic-drift-tech.html" target="_blank" rel="noopener" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
         </div>
 
         <div class="deep-dive purple">
@@ -787,17 +810,6 @@
             <span><i class="fas fa-laptop"></i> Streamlit app</span>
           </div>
           <a href="https://sentence-diagramm-364kv8mmlk7ui6ljpahykb.streamlit.app/" target="_blank" rel="noopener" class="dive-cta">Launch app <i class="fas fa-arrow-right"></i></a>
-        </div>
-
-        <div class="deep-dive blue">
-          <div class="dive-tag">Technical Paper</div>
-          <h3>Do Technology Words Drift Faster?</h3>
-          <p class="description">Measuring semantic change rates across word categories using Hamilton et al. historical embeddings. Tests whether tech vocabulary drifts faster than biology, law, or everyday language.</p>
-          <div class="dive-meta">
-            <span><i class="fas fa-calendar"></i> 2026</span>
-            <span><i class="fas fa-file-alt"></i> Interactive</span>
-          </div>
-          <a href="https://altustd.github.io/semantic-drift-tech/semantic-drift-tech.html" target="_blank" class="dive-cta">Explore <i class="fas fa-arrow-right"></i></a>
         </div>
 
         <div class="deep-dive teal wip">
@@ -873,7 +885,7 @@
       </div>
     </div>
 
-    <div class="section">
+    <div class="section" id="music">
       <div class="section-header">
         <div class="section-icon music">
           <i class="fas fa-music"></i>
@@ -891,7 +903,7 @@
             <span><i class="fas fa-calendar"></i> 2026</span>
             <span><i class="fas fa-file-alt"></i> Interactive + PDF</span>
           </div>
-          <a href="https://altustd.github.io/classical-guitar/" target="_blank" class="dive-cta">Play <i class="fas fa-arrow-right"></i></a>
+          <a href="https://altustd.github.io/classical-guitar/" target="_blank" rel="noopener" class="dive-cta">Play <i class="fas fa-arrow-right"></i></a>
         </div>
 
         <div class="deep-dive teal wip">
@@ -911,5 +923,23 @@
   <div class="footer">
     <p>© 2026 Troy Altus. All data and content sourced from open literature and publicly available resources.</p>
   </div>
+
+<script>
+  // WIP cards visible only with ?preview in URL
+  // Bookmark: https://www.troyaltus.com/troy_altus_deep_dives.html?preview
+  if (!location.search.includes('preview')) {
+    document.querySelectorAll('.deep-dive.wip').forEach(el => {
+      el.style.display = 'none';
+    });
+    document.querySelectorAll('.dives-grid').forEach(grid => {
+      const visible = grid.querySelectorAll('.deep-dive:not(.wip)');
+      if (visible.length === 0) {
+        grid.style.display = 'none';
+        const section = grid.closest('.section');
+        if (section) section.style.display = 'none';
+      }
+    });
+  }
+</script>
 </body>
 </html>
